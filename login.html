@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEFN - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="fullscreen-container">
+        <div class="login-card">
+            <h2>AUTHENTICATE</h2>
+            <p style="color:#aaa; margin-bottom:30px;">Enter credentials to access System.</p>
+            <form id="loginForm">
+                <input type="text" placeholder="Agent ID" required>
+                <input type="password" placeholder="Passcode" required>
+                <button type="submit" class="primary-btn">CONNECT</button>
+            </form>
+            <a href="index.html" style="display:block; margin-top:20px; color:#666; text-decoration:none; text-align:center;">← Back</a>
+        </div>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.location.href = "home.html";
+        });
+    </script>
+</body>
+</html>

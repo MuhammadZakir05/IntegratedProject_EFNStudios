@@ -1,0 +1,134 @@
+/* --- MASTER STYLES --- */
+:root {
+    --bg-dark: #0f172a; --surface: #1e293b; 
+    --blue: #3b82f6; --green: #22c55e; --red: #ef4444;
+}
+
+body {
+    background: radial-gradient(circle, #1e293b 0%, #0f172a 70%);
+    font-family: 'Inter', sans-serif; margin: 0; color: white;
+    height: 100vh; display: flex; justify-content: center; align-items: center;
+    overflow: hidden;
+}
+
+/* --- PHONE FRAME --- */
+.simulator-wrapper { 
+    display: flex; justify-content: center; align-items: center; 
+    height: 100vh; width: 100%; 
+}
+
+.phone-frame { 
+    width: 375px; height: 812px; 
+    background: #000; border-radius: 45px; 
+    border: 8px solid #222; position: relative; 
+    overflow: hidden; 
+    box-shadow: 0 0 60px rgba(0,0,0,0.6); 
+    display: flex; flex-direction: column;
+}
+
+.notch { 
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%); 
+    width: 150px; height: 30px; background: #000; 
+    border-radius: 0 0 20px 20px; z-index: 100; 
+}
+
+/* --- HOME SCREEN SPECIFIC (THE FIX) --- */
+.home-wallpaper {
+    /* This fixes the black background */
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #0f4b6e 0%, #25aae1 50%, #c4e86b 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Status Bar */
+.status-bar {
+    padding: 15px 25px; display: flex; justify-content: space-between;
+    color: white; font-size: 0.8rem; font-weight: 600; margin-top: 5px; z-index: 10;
+}
+
+/* Notification Card */
+.notification-card {
+    background: rgba(255, 255, 255, 0.9);
+    margin: 20px auto; width: 85%;
+    padding: 15px; border-radius: 16px;
+    display: flex; align-items: center; gap: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    cursor: pointer; animation: slideDown 0.8s ease-out;
+    color: #333;
+}
+
+@keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.notif-icon {
+    width: 45px; height: 45px; background: #3b82f6;
+    border-radius: 10px; display: flex; justify-content: center; align-items: center;
+    color: white; font-size: 1.2rem;
+}
+
+/* Bottom Dock (This fixes the vertical stacking) */
+.dock-container {
+    position: absolute; /* Force it to the bottom */
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
+    padding: 15px 0; 
+    border-radius: 30px;
+    display: flex; /* Makes items go horizontal */
+    justify-content: space-around; /* Spacing */
+    align-items: center;
+}
+
+.app-icon {
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    cursor: pointer; transition: transform 0.2s; width: 60px;
+}
+.app-icon:hover { transform: translateY(-5px); }
+
+.icon-sq {
+    width: 55px; height: 55px; border-radius: 14px;
+    display: flex; justify-content: center; align-items: center;
+    color: white; font-size: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.app-icon span {
+    font-size: 0.7rem; color: white; font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Icon Gradients */
+.blue-gradient { background: linear-gradient(135deg, #007bff, #0056b3); }
+.green-gradient { background: linear-gradient(135deg, #28a745, #1e7e34); }
+.grey-gradient { background: linear-gradient(135deg, #6c757d, #495057); }
+.dark-gradient { background: linear-gradient(135deg, #343a40, #212529); }
+
+/* --- OTHER PAGES (Login/Game/Bank) --- */
+.fullscreen-container { text-align: center; width: 100%; max-width: 600px; }
+.login-card { background: var(--surface); padding: 40px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: left;}
+input { width: 100%; padding: 15px; background: #0f172a; border: 1px solid #333; color: white; border-radius: 10px; margin-bottom: 20px; box-sizing: border-box; }
+.primary-btn { width: 100%; padding: 15px; background: var(--blue); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+
+/* Game UI Headers */
+.app-header { background: #102a43; padding: 45px 20px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; }
+.back-btn { background: none; border: none; color: white; font-size: 1rem; cursor: pointer; }
+.game-hud { background: var(--surface); padding: 15px 20px; }
+.chat-area { flex-grow: 1; background: #f1f5f9; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.msg { padding: 12px 16px; border-radius: 16px; font-size: 0.9rem; max-width: 80%; color: #333; }
+.bot { background: white; align-self: flex-start; }
+.user { background: var(--blue); color: white; align-self: flex-end; }
+.system-msg { align-self: center; font-size: 0.7rem; color: #888; margin: 10px 0; }
+.input-area { background: white; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.game-btn { width: 100%; padding: 15px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; }
+.btn-neutral { background: #64748b; } .btn-action { background: var(--blue); }
+
+/* Bank UI */
+.bank-screen { flex-grow: 1; background: #f0fdf4; padding: 20px; }
+.balance-card { background: linear-gradient(135deg, #059669, #047857); padding: 25px; border-radius: 20px; color: white; margin-bottom: 20px; }
+.txn-item { background: white; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: #333; }
+.income { color: var(--green); } .expense { color: var(--red); }
