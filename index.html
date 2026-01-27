@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEFN - Scam Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="phone-frame">
+        <div class="notch"></div>
+        
+        <section id="home-screen" class="screen active">
+            <div class="status-bar">
+                <span>10:42</span>
+                <div class="right-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+
+            <div id="notification-banner" class="notification hidden-banner" onclick="launchChat()">
+                <div class="notif-icon"><i class="fas fa-comment-dots"></i></div>
+                <div class="notif-content">
+                    <span class="app-name">ChatZap</span>
+                    <span class="notif-msg">Urgent: Your account is at risk!</span>
+                    <span class="tap-hint">Tap to Open</span>
+                </div>
+            </div>
+
+            <div class="dock">
+                <div class="app-icon" onclick="launchChat()">
+                    <div class="icon-box chat-blue"><i class="fas fa-comment-dots"></i></div>
+                    <span>ChatZap</span>
+                </div>
+                <div class="app-icon">
+                    <div class="icon-box bank-green"><i class="fas fa-wallet"></i></div>
+                    <span>Bank App</span>
+                </div>
+                <div class="app-icon">
+                    <div class="icon-box settings-grey"><i class="fas fa-cog"></i></div>
+                    <span>Settings</span>
+                </div>
+                <div class="app-icon">
+                    <div class="icon-box camera-dark"><i class="fas fa-camera"></i></div>
+                    <span>Camera</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="game-screen" class="screen hidden">
+            <div class="app-header">
+                <button onclick="goHome()" class="back-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="header-info">
+                    <span class="contact-name">Nigerian Prince</span>
+                    <span class="status">Online</span>
+                </div>
+                <i class="fas fa-camera header-icon"></i>
+            </div>
+
+            <div id="chat-window" class="chat-area">
+                <div class="message-group">
+                    <div class="avatar">👑</div>
+                    <div class="message scamer">
+                        Greetings, my friend! I need your assistance to move my fortune!
+                    </div>
+                </div>
+            </div>
+
+            <div id="choices-area" class="input-area">
+                <button class="game-btn btn-green" onclick="reply('risky')">Sounds risky...</button>
+                <button class="game-btn btn-red" onclick="reply('help')">Sure, I'll help!</button>
+                <button class="game-btn btn-purple" onclick="reply('crown')">Send me your crown!</button>
+            </div>
+        </section>
+
+        <section id="loss-screen" class="screen hidden overlay-mode">
+            <div class="loss-content">
+                <div class="loss-icon-circle">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h1>You Got Scammed!</h1>
+                <p>Your balance has been drained!</p>
+                
+                <div class="balance-display">
+                    <span class="amount">-$500</span>
+                    <span class="heart">❤️ Health</span>
+                </div>
+
+                <button class="return-btn" onclick="goHome()">Return Home</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

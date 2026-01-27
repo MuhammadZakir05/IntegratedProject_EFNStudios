@@ -1,0 +1,195 @@
+:root {
+    --bg-dark: #000;
+    --navy-header: #102a43;
+    --chat-bg: #eef1f5;
+    --green-btn: #28a745;
+    --red-btn: #dc3545;
+    --purple-btn: #6f42c1;
+    --brown-btn: #856404; /* For the "Return Home" button */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: #222;
+    font-family: 'Inter', sans-serif;
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh;
+}
+
+/* --- PHONE FRAME --- */
+.phone-frame {
+    width: 375px; height: 812px;
+    background: #000;
+    border-radius: 45px;
+    border: 10px solid #111;
+    position: relative; overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,0,0,0.6);
+}
+
+.notch {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 160px; height: 30px; background: #000;
+    border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
+    z-index: 100;
+}
+
+.screen {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    transition: transform 0.4s ease-in-out;
+}
+
+.hidden { transform: translateX(100%); }
+.active { transform: translateX(0); }
+
+/* --- HOME SCREEN (Blue/Green Wave) --- */
+#home-screen {
+    /* Exact gradient from your image */
+    background: linear-gradient(180deg, #0f4b6e 0%, #25aae1 40%, #c4e86b 100%);
+    align-items: center;
+}
+
+.status-bar {
+    width: 100%; padding: 15px 25px;
+    display: flex; justify-content: space-between;
+    color: white; font-size: 14px; font-weight: 600;
+    margin-top: 5px; z-index: 10;
+}
+.right-icons { display: flex; gap: 8px; }
+
+/* Notification Banner */
+.notification {
+    position: absolute; top: 60px; width: 90%;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px; border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    display: flex; gap: 15px; align-items: center;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer; z-index: 20;
+}
+.hidden-banner { transform: translateY(-150%); } /* Hides it off-screen top */
+
+.notif-icon {
+    width: 40px; height: 40px; background: #007bff;
+    border-radius: 8px; display: flex; justify-content: center; align-items: center;
+    color: white; font-size: 20px;
+}
+.notif-content { display: flex; flex-direction: column; }
+.app-name { font-weight: 800; font-size: 13px; color: #333; display: flex; justify-content: space-between; }
+.notif-msg { font-size: 13px; color: #555; margin-top: 2px; }
+.tap-hint { font-size: 10px; color: #999; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Bottom Dock */
+.dock {
+    position: absolute; bottom: 30px;
+    width: 90%;
+    background: rgba(255, 255, 255, 0.2); /* Glass effect */
+    backdrop-filter: blur(10px);
+    padding: 15px 10px; border-radius: 25px;
+    display: flex; justify-content: space-around;
+}
+
+.app-icon { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; transition: transform 0.1s; }
+.app-icon:active { transform: scale(0.9); }
+
+.icon-box {
+    width: 55px; height: 55px; border-radius: 14px;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 24px; color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.chat-blue { background: #007bff; }
+.bank-green { background: #a4c93a; /* Light green/yellow from image */ }
+.settings-grey { background: #4a6fa5; }
+.camera-dark { background: #2c3e50; }
+
+.app-icon span { color: white; font-size: 10px; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+
+/* --- CHAT SCREEN --- */
+#game-screen { background: var(--chat-bg); }
+
+.app-header {
+    background: var(--navy-header);
+    padding: 50px 20px 15px 20px;
+    display: flex; align-items: center; gap: 15px; color: white;
+}
+.back-btn { background: none; border: none; color: white; font-size: 18px; cursor: pointer; }
+.header-info { flex-grow: 1; display: flex; flex-direction: column; }
+.contact-name { font-weight: 700; font-size: 16px; }
+.status { font-size: 12px; opacity: 0.8; }
+
+.chat-area {
+    flex-grow: 1; padding: 20px;
+    background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
+    background-size: 20px 20px; /* Dot pattern */
+}
+
+.message-group { display: flex; gap: 10px; margin-bottom: 20px; }
+.avatar { width: 40px; height: 40px; background: gold; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 20px; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.message {
+    background: white; padding: 15px; border-radius: 15px;
+    border-top-left-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    max-width: 80%; font-size: 14px; line-height: 1.4; color: #333;
+}
+
+.player-msg {
+    align-self: flex-end; background: #007bff; color: white;
+    border-radius: 15px; border-top-right-radius: 2px;
+    padding: 10px 15px; margin-bottom: 10px; max-width: 80%;
+}
+
+.input-area {
+    background: white; padding: 20px;
+    display: flex; flex-direction: column; gap: 10px;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+}
+
+.game-btn {
+    width: 100%; padding: 15px; border: none; border-radius: 10px;
+    color: white; font-weight: 700; font-size: 15px; cursor: pointer;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1); /* 3D Button effect */
+    transition: transform 0.1s;
+}
+.game-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.1); }
+
+/* Exact colors from your image */
+.btn-green { background: #28a745; }
+.btn-red { background: #dc3545; }
+.btn-purple { background: #8e44ad; }
+
+/* --- LOSS SCREEN --- */
+.overlay-mode {
+    background: radial-gradient(circle at center, #2c3e50, #000);
+    justify-content: center; align-items: center; text-align: center;
+    color: white; z-index: 200;
+}
+
+.loss-icon-circle {
+    width: 100px; height: 100px; background: rgba(220, 53, 69, 0.2);
+    border-radius: 50%; display: flex; justify-content: center; align-items: center;
+    margin: 0 auto 20px auto;
+    box-shadow: 0 0 30px rgba(220, 53, 69, 0.4);
+}
+.loss-icon-circle i { font-size: 40px; color: #dc3545; }
+
+.loss-content h1 { font-size: 24px; margin-bottom: 5px; }
+.loss-content p { color: #aaa; margin-bottom: 30px; font-size: 14px; }
+
+.balance-display {
+    background: rgba(255,255,255,0.1);
+    padding: 15px 30px; border-radius: 15px;
+    margin-bottom: 40px;
+    display: flex; align-items: center; gap: 20px;
+}
+.amount { font-size: 28px; font-weight: 800; color: white; }
+.heart { font-size: 14px; color: #dc3545; font-weight: bold; }
+
+.return-btn {
+    background: linear-gradient(180deg, #c49c48, #8a6e34); /* Gold/Brown button */
+    border: 2px solid #5c4820;
+    padding: 12px 40px; color: white; font-weight: bold;
+    border-radius: 8px; cursor: pointer;
+}
