@@ -39,18 +39,20 @@
             let container = document.getElementById('txn-container');
             container.innerHTML = '';
             
-            data.transactions.forEach(txn => {
-                let color = txn.type === 'income' ? 'income' : 'expense';
-                let sign = txn.type === 'income' ? '+' : '';
-                container.innerHTML += `
-                    <div class="txn-item">
-                        <div>
-                            <div style="font-weight:bold;">${txn.title}</div>
-                            <div style="font-size:0.75rem; color:#999;">${txn.date}</div>
-                        </div>
-                        <div class="${color}" style="font-weight:bold;">${sign}$${Math.abs(txn.amount).toFixed(2)}</div>
-                    </div>`;
-            });
+            if(data.transactions) {
+                data.transactions.forEach(txn => {
+                    let color = txn.type === 'income' ? 'income' : 'expense';
+                    let sign = txn.type === 'income' ? '+' : '';
+                    container.innerHTML += `
+                        <div class="txn-item">
+                            <div>
+                                <div style="font-weight:bold;">${txn.title}</div>
+                                <div style="font-size:0.75rem; color:#999;">${txn.date}</div>
+                            </div>
+                            <div class="${color}" style="font-weight:bold;">${sign}$${Math.abs(txn.amount).toFixed(2)}</div>
+                        </div>`;
+                });
+            }
         }
         loadBank();
     </script>

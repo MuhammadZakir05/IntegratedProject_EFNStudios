@@ -12,9 +12,9 @@
         <div class="phone-frame">
             <div class="notch"></div>
             <div class="app-header">
-                <button class="back-btn" onclick="location.href='home.html'"><i class="fas fa-chevron-left"></i></button>
+                <button class="back-btn" onclick="location.href='home.html'"><i class="fas fa-chevron-left"></i> Home</button>
                 <span style="font-weight:bold">ChatZap</span>
-                <span style="font-size:0.8rem; opacity:0.7">SECURE</span>
+                <span style="font-size:0.7rem; background:rgba(255,255,255,0.1); padding:4px 8px; border-radius:4px;">SECURE</span>
             </div>
             <div class="game-hud">
                 <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:#aaa;">
@@ -40,7 +40,10 @@
 
         async function updateUI() {
             let data = await DB.getData();
-            if(data) document.getElementById('money-display').innerText = "$" + data.balance.toLocaleString();
+            if(data) {
+                document.getElementById('money-display').innerText = "$" + data.balance.toLocaleString();
+                if(data.balance < 3000) document.getElementById('money-display').style.color = "#ef4444";
+            }
         }
 
         async function startGame() {
@@ -89,7 +92,7 @@
                     await DB.addTransaction(`Scam: ${scenarios[idx].sender}`, choice.cost);
                     await updateUI();
                 } else if(type === 'troll') {
-                    addMessage("system-msg", "TROLL SUCCESSFUL");
+                    addMessage("system-msg", "TROLL SUCCESSFUL (XP +100)");
                 } else {
                     addMessage("system-msg", "THREAT BLOCKED");
                 }

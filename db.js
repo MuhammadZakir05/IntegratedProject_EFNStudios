@@ -1,9 +1,10 @@
+// db.js - Cloud Database Logic
+
 const CONFIG = {
-    // 1. YOUR RESTDB URL (Check your RestDB Settings -> General -> URL)
-    // It usually looks like: https://defn-1234.restdb.io/rest/gamestate
+    // 1. YOUR RESTDB URL
     DB_URL: 'https://defngame-345c.restdb.io/rest/gamestate', 
     
-    // 2. PASTE YOUR API KEY HERE (From the Screenshot)
+    // 2. YOUR API KEY
     API_KEY: '69786cc753d66e164e1956c2' 
 };
 
@@ -23,9 +24,12 @@ const DB = {
                 headers: this.getHeaders()
             });
             let data = await response.json();
+            // RestDB returns an array. We usually want the first item.
+            // If the array is empty, we return null.
             return data.length > 0 ? data[0] : null; 
         } catch (error) {
-            console.error("DB Error:", error);
+            console.error("DB Connection Error. Check API Key.", error);
+            return null;
         }
     },
 
@@ -43,19 +47,42 @@ const DB = {
 
     addTransaction: async function(title, cost) {
         let currentData = await this.getData();
-        if (!currentData) return;
+        if (!currentData) {
+            console.error("No user data found to update.");
+            return;
+        }
 
         let newBal = currentData.balance + cost;
         let newTxn = {
             title: title,
-            date: new Date().toLocaleTimeString(),
+            date: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
             amount: cost,
             type: cost > 0 ? "income" : "expense"
         };
 
         let txns = currentData.transactions || [];
-        txns.unshift(newTxn);
+        txns.unshift(newTxn); // Add to top
 
         await this.updateData(currentData._id, newBal, txns);
+    },
+
+    resetAccount: async function() {
+        let currentData = await this.getData();
+        
+        // If no data exists yet, we might need to handle the case where we create it first
+        // But assuming you manually created one record in RestDB dashboard, this works:
+        if (!currentData) {
+            alert("Error: No record found in database. Please ensure you created a record in RestDB first.");
+            return;
+        }
+
+        let defaultTxns = [
+             { title: "Salary", date: "Today, 9:00 AM", amount: 3500, type: "income" },
+             { title: "Starbucks", date: "Yesterday", amount: -7.50, type: "expense" }
+        ];
+
+        await this.updateData(currentData._id, 5000, defaultTxns);
+        alert("System Reset Complete. Balance restored to $5,000.");
+        window.location.href = "home.html";
     }
 };
