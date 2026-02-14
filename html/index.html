@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-frame">
+        <div id="app-content" style="display:flex; flex-direction:column; justify-content:center; padding:30px; text-align:center;">
+            <div style="font-size:3rem; margin-bottom:10px;">🛡️</div>
+            <h1>DEFN</h1>
+            <p style="color:#888; margin-bottom:40px;">Protect Yourself from Digital Scams</p>
+            <input type="text" id="user" placeholder="Username">
+            <input type="password" id="pass" placeholder="Password">
+            <button class="btn btn-primary" onclick="handleLogin()">Log In</button>
+            <a href="signup.html" class="btn btn-outline">Create Account</a>
+            <a href="landing.html" style="margin-top:20px; font-size:0.8rem; color:#666; text-decoration:none;">← Back to Website</a>
+        </div>
+    </div>
+    <script src="db.js"></script>
+    <script>
+        if(localStorage.getItem('defn_uid')) window.location.href = 'home.html';
+        async function handleLogin() {
+            let u = document.getElementById('user').value;
+            let p = document.getElementById('pass').value;
+            if(!await DB.login(u, p)) alert("Invalid Credentials");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-frame">
+        <div id="app-content" style="padding-top:40px;">
+            <h2 style="margin-bottom:30px;">Sign Up</h2>
+            <input type="text" id="fname" placeholder="Full Name">
+            <input type="email" id="email" placeholder="Email Address">
+            <input type="text" id="user" placeholder="Username">
+            <input type="password" id="pass" placeholder="Password">
+            <button class="btn btn-primary" onclick="signup()">Create Account</button>
+            <a href="index.html" class="btn btn-outline" style="border:none;">Back to Login</a>
+        </div>
+    </div>
+    <script src="db.js"></script>
+    <script>
+        async function signup() {
+            let f = document.getElementById('fname').value;
+            let e = document.getElementById('email').value;
+            let u = document.getElementById('user').value;
+            let p = document.getElementById('pass').value;
+            let res = await DB.signup(f, e, u, p);
+            if(res === "success") { alert("Account Created!"); window.location.href = 'index.html'; }
+            else if(res === "exists") alert("Username Taken");
+            else alert("Error");
+        }
+    </script>
+</body>
+</html>

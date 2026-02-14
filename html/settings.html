@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEFN - Settings</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app-frame">
+        <div id="app-content" class="scroll-y">
+            <h2 class="dash-header">Settings</h2>
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <b>Light Mode</b>
+                    <button class="btn btn-outline" style="width:auto; margin:0;" onclick="DB.toggleTheme()">Toggle</button>
+                </div>
+            </div>
+            <button class="btn btn-danger" onclick="if(confirm('Reset?')) { /* Add reset logic here */ }">Reset Progress</button>
+            <a href="home.html" class="btn btn-outline">Back</a>
+        </div>
+    </div>
+    <script src="db.js"></script>
+</body>
+</html>
