@@ -5,6 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scampedia - Scam Awareness Simulator</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom tweaks for Scampedia filtering */
+        .filter-wrapper {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 0.5rem 0;
+            scrollbar-width: none;
+        }
+        .filter-wrapper::-webkit-scrollbar { display: none; }
+
+        .filter-btn {
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 2rem;
+            padding: 0.4rem 1rem;
+            color: #9ca3af;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        /* Modal styling */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        .modal-overlay.active { display: flex; }
+        
+        .modal-content {
+            background: #111827;
+            border: 1px solid #374151;
+            border-radius: 1.5rem;
+            width: 100%;
+            max-width: 420px;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+    </style>
 </head>
 <body>
     <div class="page">
@@ -17,160 +71,134 @@
                 <span>Back</span>
             </a>
             <h1 class="text-center mb-2">Scampedia</h1>
-            <p class="text-center text-gray text-sm">Learn about different types of scams</p>
+            <p class="text-center text-gray text-sm">Your Encyclopedia of Online Safety</p>
         </div>
 
         <div class="container">
-            <!-- Phishing Scams -->
-            <div class="collapsible-card">
-                <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                    <div>
-                        <h3>Phishing Scams</h3>
-                        <p class="text-sm text-gray mt-1">Email and message-based fraud</p>
+            <div class="info-card mb-6">
+                <div class="input-group mb-3">
+                    <div style="position: relative;">
+                        <input type="text" id="search-input" class="input-field" placeholder="Search 8+ scam types..." style="padding-left: 2.5rem;">
+                        <svg class="icon" viewBox="0 0 24 24" style="position: absolute; left: 0.75rem; top: 0.85rem; width: 1.2rem; color: #6b7280;">
+                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
                     </div>
-                    <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
-                        <polyline points="6 9 12 15 18 9"/>
-                    </svg>
                 </div>
-                <div class="collapsible-content">
-                    <p class="text-sm mb-3">Phishing scams trick victims into revealing sensitive information through fake emails or messages that appear to be from legitimate sources.</p>
-                    <p class="text-sm mb-2"><strong>Common Signs:</strong></p>
-                    <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm text-gray">
-                        <li>Suspicious email addresses or URLs</li>
-                        <li>Urgent language demanding immediate action</li>
-                        <li>Requests for personal or financial information</li>
-                        <li>Poor grammar and spelling errors</li>
-                    </ul>
+
+                <div class="filter-wrapper">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="Social Engineering">Social Engineering</button>
+                    <button class="filter-btn" data-category="Financial">Financial</button>
+                    <button class="filter-btn" data-category="Cyber Crime">Cyber Crime</button>
                 </div>
             </div>
 
-            <!-- Investment Scams -->
-            <div class="collapsible-card">
-                <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                    <div>
-                        <h3>Investment Scams</h3>
-                        <p class="text-sm text-gray mt-1">Fake opportunities and ponzi schemes</p>
-                    </div>
-                    <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
-                        <polyline points="6 9 12 15 18 9"/>
-                    </svg>
+            <div id="cards-container" style="display: flex; flex-direction: column; gap: 1rem; padding-bottom: 2rem;">
                 </div>
-                <div class="collapsible-content">
-                    <p class="text-sm mb-3">Investment scams promise high returns with little or no risk. They often use social pressure and fake testimonials to lure victims.</p>
-                    <p class="text-sm mb-2"><strong>Warning Signs:</strong></p>
-                    <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm text-gray">
-                        <li>Guaranteed or unusually high returns</li>
-                        <li>Pressure to invest quickly</li>
-                        <li>Unregistered investment opportunities</li>
-                        <li>Complex strategies that are hard to understand</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Employment Scams -->
-            <div class="collapsible-card">
-                <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                    <div>
-                        <h3>Employment Scams</h3>
-                        <p class="text-sm text-gray mt-1">Fake job offers and work-from-home schemes</p>
-                    </div>
-                    <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
-                        <polyline points="6 9 12 15 18 9"/>
-                    </svg>
-                </div>
-                <div class="collapsible-content">
-                    <p class="text-sm mb-3">Employment scams offer fake jobs that require upfront payments or steal personal information during the "application" process.</p>
-                    <p class="text-sm mb-2"><strong>Red Flags:</strong></p>
-                    <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm text-gray">
-                        <li>Job offers without an application or interview</li>
-                        <li>Requests for money for training or equipment</li>
-                        <li>Vague job descriptions</li>
-                        <li>Unrealistic salary for the work required</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Romance Scams -->
-            <div class="collapsible-card">
-                <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                    <div>
-                        <h3>Romance Scams</h3>
-                        <p class="text-sm text-gray mt-1">Fake relationships for financial gain</p>
-                    </div>
-                    <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
-                        <polyline points="6 9 12 15 18 9"/>
-                    </svg>
-                </div>
-                <div class="collapsible-content">
-                    <p class="text-sm mb-3">Romance scammers create fake profiles on dating sites and social media to build relationships, then ask for money.</p>
-                    <p class="text-sm mb-2"><strong>Warning Signs:</strong></p>
-                    <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm text-gray">
-                        <li>Professes love very quickly</li>
-                        <li>Claims to be overseas or unable to meet in person</li>
-                        <li>Asks for money for emergencies or travel</li>
-                        <li>Avoids video calls or in-person meetings</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Tech Support Scams -->
-            <div class="collapsible-card">
-                <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                    <div>
-                        <h3>Tech Support Scams</h3>
-                        <p class="text-sm text-gray mt-1">Fake technical assistance</p>
-                    </div>
-                    <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
-                        <polyline points="6 9 12 15 18 9"/>
-                    </svg>
-                </div>
-                <div class="collapsible-content">
-                    <p class="text-sm mb-3">Scammers pose as tech support from well-known companies, claiming your computer has a virus or security issue.</p>
-                    <p class="text-sm mb-2"><strong>Common Tactics:</strong></p>
-                    <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm text-gray">
-                        <li>Unsolicited pop-ups claiming virus infection</li>
-                        <li>Cold calls from "Microsoft" or "Apple"</li>
-                        <li>Request remote access to your computer</li>
-                        <li>Charge for unnecessary services or software</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- General Protection Tips -->
-            <div class="info-card" style="margin-top: 2rem; background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1)); border-color: rgba(16, 185, 129, 0.3);">
-                <h3 class="mb-3 text-green">General Protection Tips</h3>
-                <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm">
-                    <li class="mb-2">Always verify before you trust - check official websites and phone numbers</li>
-                    <li class="mb-2">Never share personal or financial information through unsecured channels</li>
-                    <li class="mb-2">Be skeptical of offers that seem too good to be true</li>
-                    <li class="mb-2">Use strong, unique passwords and enable two-factor authentication</li>
-                    <li class="mb-2">Keep your software and security systems updated</li>
-                    <li class="mb-2">Report suspected scams to authorities immediately</li>
-                </ul>
-            </div>
         </div>
     </div>
-    <div id="badge-popup" class="badge-popup-overlay hidden">
-        <div class="badge-popup">
-            <h2 id="popup-badge-type">Badge Unlocked!</h2>
-            <h3 id="popup-badge-title"></h3>
-            <p id="popup-badge-description"></p>
-            <button class="btn btn-primary" onclick="closeBadgePopup()">OK</button>
-        </div>
+
+    <div class="modal-overlay" id="modal" onclick="if(event.target === this) closeModal()">
+        <div class="modal-content" id="modal-content"></div>
     </div>
 
     <script src="app.js"></script>
     <script>
-        if (!getCurrentUser()) window.location.href = 'login.html';
-        
-        // Unlock Logic
-        unlockAchievement('scampedia_visited', {
-            title: 'Knowledge Seeker',
-            description: 'You explored the Scampedia!',
-            type: 'badge'
+        // Icons for all 8 types
+        const svgPaths = {
+            impersonation: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 1 0-8 4 4 0 0 1 0 8z',
+            job: 'M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16M2 7h20v14H2z',
+            phishing: 'M1 10h22M1 4h22v16H1z',
+            phone: 'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72',
+            romance: 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',
+            shopping: 'M9 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM20 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6',
+            sms: 'M17 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM12 18h.01',
+            email: 'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6'
+        };
+
+        // Complete data from original code
+        const scamData = [
+            { id: 'impersonation', title: 'Impersonation Scam', category: 'Social Engineering', gradient: 'linear-gradient(135deg, #3b82f6, #06b6d4)', icon: 'impersonation', definition: 'Scammers pretend to be someone you know (friend, family, colleague) to manipulate you.', redFlags: ['Unusual urgency', 'Requests for gift cards', 'Conversation must be secret'] },
+            { id: 'job', title: 'Job Offer Scam', category: 'Financial', gradient: 'linear-gradient(135deg, #a855f7, #ec4899)', icon: 'job', definition: 'Fraudulent job offers that require upfront payment for equipment or fees.', redFlags: ['No formal interview', 'Upfront payment required', 'Unrealistic high salary'] },
+            { id: 'phishing', title: 'Phishing Attack', category: 'Cyber Crime', gradient: 'linear-gradient(135deg, #ef4444, #f97316)', icon: 'phishing', definition: 'Fake websites or emails that steal login credentials by mimicking trusted brands.', redFlags: ['Suspicious domain names', 'Urgent warnings', 'Generic greetings'] },
+            { id: 'phone', title: 'Phone/Vishing Scam', category: 'Social Engineering', gradient: 'linear-gradient(135deg, #00c950, #00bc7d)', icon: 'phone', definition: 'Voice phishing where scammers call pretending to be authorities or bank staff.', redFlags: ['Threats of arrest', 'Requests for OTPs over phone', 'Caller ID spoofing'] },
+            { id: 'romance', title: 'Romance Scam', category: 'Social Engineering', gradient: 'linear-gradient(135deg, #f6339a, #ff2056)', icon: 'romance', definition: 'Fake online personas used to gain trust and love, then exploit victims financially.', redFlags: ['Professes love very quickly', 'Never meets in person', 'Always has a financial crisis'] },
+            { id: 'shopping', title: 'Online Shopping Scam', category: 'Financial', gradient: 'linear-gradient(135deg, #615fff, #ad46ff)', icon: 'shopping', definition: 'Fake online stores that take payment but never deliver goods.', redFlags: ['Prices below market value', 'No contact info', 'Untraceable payment methods'] },
+            { id: 'sms', title: 'SMS/Smishing Scam', category: 'Cyber Crime', gradient: 'linear-gradient(135deg, #f0b100, #ff6900)', icon: 'sms', definition: 'Fraudulent texts designed to trick you into clicking malicious links.', redFlags: ['Unknown sender numbers', 'Suspicious bit.ly links', 'Delivery failure alerts'] },
+            { id: 'email', title: 'Email Scam', category: 'Cyber Crime', gradient: 'linear-gradient(135deg, #00bba7, #00b8db)', icon: 'email', definition: 'Emails that impersonate organizations to distribute malware or request money.', redFlags: ['Mismatched sender address', 'Unexpected attachments', 'CEO/Boss fraud'] }
+        ];
+
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        function renderCards() {
+            const container = document.getElementById('cards-container');
+            const filtered = scamData.filter(scam => {
+                const matchesSearch = scam.title.toLowerCase().includes(searchQuery.toLowerCase());
+                const matchesCategory = currentCategory === 'all' || scam.category === currentCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            container.innerHTML = filtered.map(scam => `
+                <div class="info-item" style="cursor:pointer; border-left: 4px solid #3b82f6;" onclick="showModal('${scam.id}')">
+                    <div style="display:flex; align-items:center; gap:1rem; width:100%;">
+                        <div style="width:40px; height:40px; border-radius:8px; background:${scam.gradient}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                             <svg class="icon" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24" style="width:20px; height:20px;">
+                                <path d="${svgPaths[scam.icon]}" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div style="flex:1;">
+                            <p class="text-sm"><strong>${scam.title}</strong></p>
+                            <p class="text-xs text-gray">${scam.category}</p>
+                        </div>
+                        <svg class="icon" viewBox="0 0 24 24" style="width:1.2rem; color:#4b5563;"><polyline points="9 18 15 12 9 6"/></svg>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showModal(id) {
+            const scam = scamData.find(s => s.id === id);
+            const content = document.getElementById('modal-content');
+            content.innerHTML = `
+                <div class="modal-header" style="background: ${scam.gradient};">
+                    <div style="width:60px; height:60px; margin:0 auto 1rem; border-radius:12px; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center;">
+                        <svg class="icon" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24" style="width:32px; height:32px;"><path d="${svgPaths[scam.icon]}" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h2 class="text-white">${scam.title}</h2>
+                    <p class="text-xs text-white" style="opacity:0.8;">${scam.category}</p>
+                </div>
+                <div class="modal-body">
+                    <h4 class="mb-2">What is it?</h4>
+                    <p class="text-sm text-gray mb-4">${scam.definition}</p>
+                    <h4 class="mb-2">Red Flags</h4>
+                    <ul class="text-sm">${scam.redFlags.map(f => `<li class="mb-2" style="color:#f87171;">⚠️ ${f}</li>`).join('')}</ul>
+                    <button class="btn btn-primary mt-6" onclick="closeModal()">Got it!</button>
+                </div>
+            `;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('modal').classList.remove('active'); }
+
+        document.getElementById('search-input').addEventListener('input', (e) => { searchQuery = e.target.value; renderCards(); });
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                renderCards();
+            });
         });
-        
-        checkPendingBadge();
+
+        renderCards();
+
+        (async () => {
+            if (!getCurrentUser()) window.location.href = 'login.html';
+            if (typeof unlockAchievement === 'function') {
+                unlockAchievement('scampedia_visited', { title: 'Knowledge Seeker', description: 'You explored the Scampedia!', type: 'badge' });
+            }
+        })();
     </script>
 </body>
 </html>

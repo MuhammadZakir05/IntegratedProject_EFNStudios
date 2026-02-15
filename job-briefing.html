@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenario Briefing - Job Scam</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arimo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #121212;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 402.742px;
+            margin: 0 auto;
+            background: #121212;
+            min-height: 100vh;
+            position: relative;
+            padding: 24.98px;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 7.991px;
+            position: absolute;
+            left: 24.98px;
+            top: 45px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-button svg {
+            width: 19.996px;
+            height: 19.996px;
+        }
+
+        .back-button span {
+            font-size: 16px;
+            color: #99a1af;
+            line-height: 24px;
+        }
+
+        .header-section {
+            position: absolute;
+            left: 24.98px;
+            top: 79.95px;
+            width: 352.782px;
+            height: 159.932px;
+        }
+
+        .icon-container {
+            position: absolute;
+            left: 136.4px;
+            top: 0;
+            width: 79.984px;
+            height: 79.984px;
+            background: linear-gradient(135deg, rgb(43, 127, 255) 0%, rgb(173, 70, 255) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-container svg {
+            width: 31.983px;
+            height: 31.983px;
+        }
+
+        .header-title {
+            position: absolute;
+            left: 0;
+            top: 95.97px;
+            width: 352.782px;
+            height: 31.983px;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 32px;
+            text-align: center;
+            color: white;
+        }
+
+        .header-subtitle {
+            position: absolute;
+            left: 0;
+            top: 135.94px;
+            width: 352.782px;
+            height: 23.992px;
+            font-size: 16px;
+            line-height: 24px;
+            text-align: center;
+            color: #99a1af;
+        }
+
+        .main-content {
+            position: absolute;
+            left: 24.98px;
+            top: 271.86px;
+            width: 352.782px;
+            height: 720.042px;
+        }
+
+        .platform-card {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 352.782px;
+            height: 111.967px;
+            background: #1e1e1e;
+            border-radius: 16px;
+        }
+
+        .platform-icon {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            width: 39.992px;
+            height: 39.992px;
+            background: linear-gradient(135deg, rgb(43, 127, 255) 0%, rgb(0, 184, 219) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .platform-icon svg {
+            width: 19.996px;
+            height: 19.996px;
+        }
+
+        .platform-title {
+            position: absolute;
+            left: 71.979px;
+            top: 20px;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 28px;
+            color: white;
+        }
+
+        .platform-text {
+            position: absolute;
+            left: 71.99px;
+            top: 67.98px;
+            font-size: 16px;
+            line-height: 24px;
+            color: #d1d5dc;
+        }
+
+        .grid-container {
+            position: absolute;
+            left: 0;
+            top: 127.95px;
+            width: 352.782px;
+            height: 115.963px;
+        }
+
+        .time-card {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 168.4px;
+            height: 115.963px;
+            background: #1e1e1e;
+            border-radius: 16px;
+        }
+
+        .time-icon {
+            position: absolute;
+            left: 20px;
+            top: 23px;
+            width: 17.705px;
+            height: 17.998px;
+        }
+
+        .time-title {
+            position: absolute;
+            left: 20px;
+            top: 35.19px;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px;
+            color: white;
+        }
+
+        .time-text {
+            position: absolute;
+            left: 36.02px;
+            top: 74.19px;
+            font-size: 14px;
+            line-height: 20px;
+            color: #d1d5dc;
+        }
+
+        .source-card {
+            position: absolute;
+            left: 184.38px;
+            top: 0;
+            width: 168.4px;
+            height: 115.963px;
+            background: #1e1e1e;
+            border-radius: 16px;
+        }
+
+        .source-icon {
+            position: absolute;
+            left: 35.64px;
+            top: 37.19px;
+            width: 17.998px;
+            height: 17.998px;
+        }
+
+        .source-title {
+            position: absolute;
+            left: 61.63px;
+            top: 34.19px;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px;
+            color: white;
+        }
+
+        .source-text {
+            position: absolute;
+            left: 35.64px;
+            top: 73.19px;
+            font-size: 14px;
+            line-height: 20px;
+            color: #d1d5dc;
+        }
+
+        .situation-card {
+            position: absolute;
+            left: 0;
+            top: 259.89px;
+            width: 352.782px;
+            height: 209.913px;
+            background: #1e1e1e;
+            border-radius: 16px;
+            padding: 19.996px;
+        }
+
+        .situation-title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 28px;
+            color: white;
+            margin-bottom: 11.987px;
+        }
+
+        .situation-text {
+            font-size: 16px;
+            line-height: 26px;
+            color: #d1d5dc;
+        }
+
+        .tip-card {
+            position: absolute;
+            left: 0;
+            top: 485.79px;
+            width: 352.782px;
+            height: 234.253px;
+            background: linear-gradient(135deg, rgba(254, 154, 0, 0.1) 0%, rgba(255, 105, 0, 0.1) 100%);
+            border: 1.173px solid rgba(254, 154, 0, 0.3);
+            border-radius: 16px;
+            padding: 21.169px;
+        }
+
+        .tip-header {
+            display: flex;
+            gap: 11.987px;
+            align-items: flex-start;
+            margin-bottom: 7.991px;
+        }
+
+        .tip-icon {
+            width: 39.992px;
+            height: 39.992px;
+            background: linear-gradient(135deg, rgb(254, 154, 0) 0%, rgb(255, 105, 0) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .tip-icon svg {
+            width: 19.996px;
+            height: 19.996px;
+        }
+
+        .tip-title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 28px;
+            color: #ffb900;
+        }
+
+        .tip-text {
+            font-size: 16px;
+            line-height: 26px;
+            color: #d1d5dc;
+        }
+
+        .button-section {
+            position: absolute;
+            left: 24.98px;
+            top: 1023.89px;
+            width: 352.782px;
+            height: 126.245px;
+        }
+
+        .btn-primary {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 352.782px;
+            height: 55.956px;
+            background: linear-gradient(to right, #155dfc, #9810fa);
+            border: none;
+            border-radius: 14px;
+            box-shadow: 0px 10px 15px 0px rgba(0,0,0,0.1), 0px 4px 6px 0px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7.991px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-primary span {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px;
+            text-align: center;
+            color: white;
+        }
+
+        .btn-primary svg {
+            width: 19.996px;
+            height: 19.996px;
+        }
+
+        .btn-secondary {
+            position: absolute;
+            left: 0;
+            top: 67.94px;
+            width: 352.782px;
+            height: 58.302px;
+            background: #1e1e1e;
+            border: 1.173px solid #364153;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-secondary span {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="scenario-selection.html" class="back-button">
+            <svg fill="none" viewBox="0 0 19.9961 19.9961">
+                <path d="M9.99804 15.8302L4.16585 9.99804L9.99804 4.16585" stroke="#99A1AF" stroke-width="1.66634" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15.8302 9.99804H4.16585" stroke="#99A1AF" stroke-width="1.66634" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Back to Scenarios</span>
+        </a>
+
+        <div class="header-section">
+            <div class="icon-container">
+                <svg fill="none" viewBox="0 0 31.9827 31.9827">
+                    <path d="M26.6519 3.99861H3.33048C2.28629 3.99861 1.66504 4.89373 1.66504 5.99791V23.9925C1.66504 25.0967 2.28629 25.9918 3.33048 25.9918H26.6519C27.6961 25.9918 28.6512 25.0967 28.6512 23.9925V5.99791C28.6512 4.89373 27.6961 3.99861 26.6519 3.99861Z" stroke="white" stroke-width="2.66523" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M28.6512 13.326H1.66504" stroke="white" stroke-width="2.66523" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h1 class="header-title">Scenario Briefing</h1>
+            <p class="header-subtitle">Review the details before proceeding</p>
+        </div>
+
+        <div class="main-content">
+            <div class="platform-card">
+                <div class="platform-icon">
+                    <svg fill="none" viewBox="0 0 19.9961 19.9961">
+                        <path d="M14.1639 1.66634H5.83219C4.9119 1.66634 4.16585 2.41239 4.16585 3.33268V16.6634C4.16585 17.5837 4.9119 18.3297 5.83219 18.3297H14.1639C15.0842 18.3297 15.8302 17.5837 15.8302 16.6634V3.33268C15.8302 2.41239 15.0842 1.66634 14.1639 1.66634Z" stroke="white" stroke-width="1.66634" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.99804 14.9971H10.0064" stroke="white" stroke-width="1.66634" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="platform-title">Platform</div>
+                <div class="platform-text">Email</div>
+            </div>
+
+            <div class="grid-container">
+                <div class="time-card">
+                    <svg class="time-icon" fill="none" viewBox="0 0 17.7051 17.9983">
+                        <path d="M8.85253 16.3763C12.9268 16.3763 16.2296 13.0734 16.2296 8.99916C16.2296 4.92489 12.9268 1.62205 8.85253 1.62205C4.77827 1.62205 1.47542 4.92489 1.47542 8.99916C1.47542 13.0734 4.77827 16.3763 8.85253 16.3763Z" stroke="#51A2FF" stroke-width="1.47542" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.85253 4.57289V8.99916L11.8034 10.4746" stroke="#51A2FF" stroke-width="1.47542" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="time-title">Time Received</div>
+                    <div class="time-text">9:15 AM, Today</div>
+                </div>
+
+                <div class="source-card">
+                    <svg class="source-icon" fill="none" viewBox="0 0 17.9983 17.9983">
+                        <path d="M16.296 13.4987L10.2965 2.99972C10.1657 2.76889 9.97602 2.5769 9.74678 2.44332C9.51754 2.30975 9.25697 2.23937 8.99166 2.23937C8.72634 2.23937 8.46577 2.30975 8.23654 2.44332C8.0073 2.5769 7.81759 2.76889 7.68678 2.99972L1.68734 13.4987C1.55512 13.7277 1.48578 13.9876 1.48637 14.252C1.48695 14.5165 1.55744 14.7761 1.69068 15.0045C1.82392 15.2329 2.01517 15.422 2.24506 15.5527C2.47495 15.6833 2.7353 15.7509 2.99972 15.7485H14.9986C15.2617 15.7483 15.5202 15.6788 15.748 15.547C15.9758 15.4153 16.1649 15.2259 16.2964 14.9979C16.4278 14.77 16.497 14.5114 16.4969 14.2483C16.4968 13.9851 16.4275 13.7266 16.296 13.4987Z" stroke="#FFB900" stroke-width="1.49986" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99916 6.74937V9.74909" stroke="#FFB900" stroke-width="1.49986" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.99916 12.7488H9.00666" stroke="#FFB900" stroke-width="1.49986" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="source-title">Source</div>
+                    <div class="source-text">jobs@greencareers.com</div>
+                </div>
+            </div>
+
+            <div class="situation-card">
+                <div class="situation-title">Situation</div>
+                <div class="situation-text">You receive an email from 'Green Careers' offering you a remote job opportunity with high pay. However, they require a $100 registration fee upfront to process your application and training materials.</div>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-header">
+                    <div class="tip-icon">
+                        <svg fill="none" viewBox="0 0 19.9961 19.9961">
+                            <path d="M12.4976 11.6644C12.6642 10.8312 13.0808 10.248 13.7473 9.58146C14.5805 8.83161 14.9971 7.74848 14.9971 6.66536C14.9971 5.33954 14.4704 4.06802 13.5329 3.13052C12.5954 2.19302 11.3239 1.66634 9.99804 1.66634C8.67222 1.66634 7.4007 2.19302 6.4632 3.13052C5.5257 4.06802 4.99902 5.33954 4.99902 6.66536C4.99902 7.49853 5.16566 8.49834 6.24878 9.58146C6.832 10.1647 7.3319 10.8312 7.49853 11.6644" stroke="white" stroke-width="1.66634" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7.49853 14.9971H12.4976" stroke="white" stroke-width="1.66634" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8.3317 18.3298H11.6644" stroke="white" stroke-width="1.66634" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div style="flex: 1;">
+                        <div class="tip-title">💡 Tip</div>
+                        <div class="tip-text">Legitimate employers never ask for money upfront. Registration fees, training costs, or equipment deposits are red flags. Always research the company independently and verify their legitimacy before responding.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-section">
+            <a href="job-scam.html" class="btn-primary">
+                <span>Continue to Scenario</span>
+                <svg fill="none" viewBox="0 0 19.9961 19.9961">
+                    <path d="M4.16585 9.99804H15.8302" stroke="white" stroke-width="1.66634" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9.99804 4.16585L15.8302 9.99804L9.99804 15.8302" stroke="white" stroke-width="1.66634" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <a href="scenario-selection.html" class="btn-secondary">
+                <span>Back to Selection</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        const currentUser = getCurrentUser();
+        if (!currentUser) {
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
