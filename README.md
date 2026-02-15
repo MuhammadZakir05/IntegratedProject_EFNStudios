@@ -3,6 +3,8 @@ by Joshua and Zakir
 school project
 # Scam Awareness Simulator - HTML/CSS Prototype
 
+website:https://muhammadzakir05.github.io/IntegratedProject_EFNStudios/
+figma:https://www.figma.com/design/PjSukBT5VhcTqJan7dGLdS/AD_DEFN_Prototype?node-id=0-1&t=4sBdS895uGHJ8zDB-1
 A complete educational web application to help users recognize and avoid common scams through interactive scenarios and Hands on learning.
 
 ### 🔐 Authentication System
