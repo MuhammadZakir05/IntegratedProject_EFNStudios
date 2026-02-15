@@ -3,33 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Sign Up - Scam Awareness Simulator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app-frame">
-        <div id="app-content" style="padding-top:40px;">
-            <h2 style="margin-bottom:30px;">Create Account</h2>
-            <input type="text" id="fname" placeholder="Full Name">
-            <input type="email" id="email" placeholder="Email Address">
-            <input type="text" id="user" placeholder="Username">
-            <input type="password" id="pass" placeholder="Password">
-            
-            <button class="btn btn-primary" onclick="handleSignup()">Sign Up</button>
-            <a href="index.html" class="btn btn-outline" style="border:none;">Back to Login</a>
+    <div class="page">
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <h1>Scam Awareness</h1>
+                <p class="text-sm text-gray">Create Your Account</p>
+            </div>
+
+            <div class="form-card">
+                <h2 class="mb-6">Sign Up</h2>
+                <input type="text" id="signup-fullname" class="input-field mb-4" placeholder="Full Name">
+                <input type="email" id="signup-email" class="input-field mb-4" placeholder="Email">
+                <input type="text" id="signup-username" class="input-field mb-4" placeholder="Username">
+                
+                <div class="input-wrapper mb-4">
+                    <input type="password" id="signup-password" class="input-field" placeholder="Password" oninput="updStr()">
+                </div>
+                <div class="password-strength" style="display:flex; gap:5px; height:5px; margin-bottom:10px;">
+                    <div id="s1" style="flex:1; background:#374151;"></div>
+                    <div id="s2" style="flex:1; background:#374151;"></div>
+                    <div id="s3" style="flex:1; background:#374151;"></div>
+                    <div id="s4" style="flex:1; background:#374151;"></div>
+                </div>
+                
+                <input type="password" id="signup-confirm" class="input-field mb-4" placeholder="Confirm Password">
+                
+                <button class="btn btn-primary mb-4" onclick="handleSignup()">Create Account</button>
+                <a href="login.html" class="text-link text-sm block text-center">Back to Login</a>
+                <div id="signup-error" class="error-message hidden"></div>
+            </div>
         </div>
     </div>
-    <script src="db.js"></script>
+
+    <script src="app.js"></script>
     <script>
+        function updStr() {
+            checkPasswordStrength(document.getElementById('signup-password').value, 
+                [document.getElementById('s1'), document.getElementById('s2'), document.getElementById('s3'), document.getElementById('s4')]
+            );
+        }
+
         async function handleSignup() {
-            let f = document.getElementById('fname').value;
-            let e = document.getElementById('email').value;
-            let u = document.getElementById('user').value;
-            let p = document.getElementById('pass').value;
-            let res = await DB.signup(f, e, u, p);
-            if(res === "success") { alert("Created!"); window.location.href = 'index.html'; }
-            else if(res === "exists") alert("Username taken.");
-            else alert("Error.");
+            const f = document.getElementById('signup-fullname').value;
+            const e = document.getElementById('signup-email').value;
+            const u = document.getElementById('signup-username').value;
+            const p = document.getElementById('signup-password').value;
+            const c = document.getElementById('signup-confirm').value;
+
+            if(!f || !e || !u || !p) return showError('signup-error', 'Fill all fields');
+            if(p !== c) return showError('signup-error', 'Passwords do not match');
+
+            const btn = document.querySelector('.btn-primary');
+            btn.innerText = "Creating...";
+
+            const res = await DB.signup(f, e, u, p);
+            
+            if(res.success) window.location.href = 'dashboard.html';
+            else {
+                showError('signup-error', res.message);
+                btn.innerText = "Create Account";
+            }
         }
     </script>
 </body>

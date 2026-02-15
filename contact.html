@@ -3,12 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Contact & Help - Scam Awareness Simulator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body style="background:#000; color:white; padding:50px; display:block; height:auto;">
-    <h1>Contact Us</h1>
-    <p style="color:#888;">Email us at support@defn.com</p>
-    <a href="landing.html" class="btn btn-outline" style="width:200px;">Back Home</a>
+<body>
+    <div class="page">
+        <div class="scenario-header">
+            <a href="dashboard.html" class="back-btn">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="19" y1="12" x2="5" y2="12"/>
+                    <polyline points="12 19 5 12 12 5"/>
+                </svg>
+                <span>Back</span>
+            </a>
+            <h1 class="text-center mb-2">Contact & Help</h1>
+            <p class="text-center text-gray text-sm">Report scams or get assistance</p>
+        </div>
+
+        <div class="container">
+            <!-- Emergency Contacts -->
+            <div class="info-card" style="background: linear-gradient(to bottom right, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1)); border-color: rgba(239, 68, 68, 0.3);">
+                <h2 class="mb-4 text-red">🚨 Report a Scam</h2>
+                <p class="text-sm mb-4">If you've been scammed or encountered a scam attempt, report it immediately to:</p>
+                
+                <div class="info-item">
+                    <div>
+                        <p class="text-sm mb-1"><strong>Federal Trade Commission (FTC)</strong></p>
+                        <p class="text-xs text-gray mb-1">Website: ReportFraud.ftc.gov</p>
+                        <p class="text-xs text-gray">Phone: 1-877-FTC-HELP (382-4357)</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div>
+                        <p class="text-sm mb-1"><strong>FBI Internet Crime Complaint Center</strong></p>
+                        <p class="text-xs text-gray">Website: ic3.gov</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div>
+                        <p class="text-sm mb-1"><strong>Local Police Department</strong></p>
+                        <p class="text-xs text-gray">For immediate threats or ongoing scams</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="form-card mt-6">
+                <h2 class="mb-4">Send Us a Message</h2>
+
+                <div class="input-group">
+                    <label class="input-label">Name</label>
+                    <input type="text" id="contact-name" class="input-field" placeholder="Your name" style="padding-left: 1rem;">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Email</label>
+                    <input type="email" id="contact-email" class="input-field" placeholder="Your email" style="padding-left: 1rem;">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Subject</label>
+                    <input type="text" id="contact-subject" class="input-field" placeholder="What's this about?" style="padding-left: 1rem;">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Message</label>
+                    <textarea id="contact-message" style="width: 100%; padding: 1rem; background: #1f2937; border: 1px solid #374151; border-radius: 0.75rem; color: white; font-size: 1rem; outline: none; font-family: inherit; min-height: 150px; resize: vertical;" placeholder="Describe your situation or question..."></textarea>
+                </div>
+
+                <button class="btn btn-primary" onclick="handleSubmit()">Send Message</button>
+
+                <div id="contact-success" class="success-message hidden"></div>
+                <div id="contact-error" class="error-message hidden"></div>
+            </div>
+
+            <!-- Help Resources -->
+            <div class="info-card mt-6">
+                <h2 class="mb-4">📚 Help Resources</h2>
+                
+                <div class="collapsible-card" style="border-radius: 0.75rem; margin-bottom: 1rem;">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <p class="text-sm"><strong>What to do if you've been scammed</strong></p>
+                        <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </div>
+                    <div class="collapsible-content">
+                        <ol style="list-style: decimal; padding-left: 1.5rem;" class="text-sm text-gray">
+                            <li class="mb-2">Stop all communication with the scammer</li>
+                            <li class="mb-2">Document everything (messages, transactions, dates)</li>
+                            <li class="mb-2">Report to authorities immediately</li>
+                            <li class="mb-2">Contact your bank or credit card company</li>
+                            <li class="mb-2">Change passwords if you shared any information</li>
+                            <li class="mb-2">Monitor your accounts for suspicious activity</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="collapsible-card" style="border-radius: 0.75rem; margin-bottom: 1rem;">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <p class="text-sm"><strong>How to protect yourself</strong></p>
+                        <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </div>
+                    <div class="collapsible-content">
+                        <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm text-gray">
+                            <li class="mb-2">Never share personal or financial information with unsolicited contacts</li>
+                            <li class="mb-2">Verify identities through official channels</li>
+                            <li class="mb-2">Use strong, unique passwords for all accounts</li>
+                            <li class="mb-2">Enable two-factor authentication</li>
+                            <li class="mb-2">Keep software and antivirus updated</li>
+                            <li class="mb-2">Be skeptical of urgent requests for money or information</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="collapsible-card" style="border-radius: 0.75rem;">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <p class="text-sm"><strong>Frequently Asked Questions</strong></p>
+                        <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </div>
+                    <div class="collapsible-content">
+                        <p class="text-sm mb-2"><strong>Q: Can I get my money back if I've been scammed?</strong></p>
+                        <p class="text-xs text-gray mb-3">A: It depends on the payment method. Contact your bank or credit card company immediately. Recovery rates are low, but acting fast improves your chances.</p>
+                        
+                        <p class="text-sm mb-2"><strong>Q: Should I feel ashamed about being scammed?</strong></p>
+                        <p class="text-xs text-gray mb-3">A: Absolutely not. Scammers are professionals who exploit psychology. Anyone can be a victim. Reporting helps protect others.</p>
+                        
+                        <p class="text-sm mb-2"><strong>Q: Is it safe to engage with scammers to waste their time?</strong></p>
+                        <p class="text-xs text-gray">A: Not recommended. Engaging can expose you to risks and scammers may retaliate. It's best to block and report immediately.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Check if user is logged in
+        const currentUser = getCurrentUser();
+        if (!currentUser) {
+            window.location.href = 'login.html';
+        }
+
+        function handleSubmit() {
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const subject = document.getElementById('contact-subject').value;
+            const message = document.getElementById('contact-message').value;
+
+            if (!name || !email || !subject || !message) {
+                showError('contact-error', 'Please fill in all fields');
+                return;
+            }
+
+            if (!email.includes('@')) {
+                showError('contact-error', 'Please enter a valid email address');
+                return;
+            }
+
+            // In a real app, this would send the message to a server
+            showSuccess('contact-success', 'Message sent successfully! We\'ll get back to you soon.');
+            
+            // Clear form
+            document.getElementById('contact-name').value = '';
+            document.getElementById('contact-email').value = '';
+            document.getElementById('contact-subject').value = '';
+            document.getElementById('contact-message').value = '';
+        }
+    </script>
 </body>
 </html>

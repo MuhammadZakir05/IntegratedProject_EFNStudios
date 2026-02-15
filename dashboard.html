@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page">
+        <div class="dashboard-header">
+            <div class="header-top">
+                <div class="header-content">
+                    <div class="header-icon"><svg class="icon" viewBox="0 0 24 24" style="color:white;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                    <div><h1>Scam Simulator</h1><p class="text-sm text-gray">Stay safe</p></div>
+                </div>
+                <a href="profile.html" class="profile-btn">
+                    <span class="badge-count" id="badge-count">0</span>
+                    <span style="color:#aaa;">👤</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="container">
+            <a href="scenario-selection.html" class="nav-card">
+                <div class="nav-icon gradient-blue">🎮</div>
+                <div style="flex:1;"><h3>Start Scenario</h3><p class="text-sm text-gray">Test your skills</p></div>
+            </a>
+            <a href="scampedia.html" class="nav-card">
+                <div class="nav-icon gradient-purple">📚</div>
+                <div style="flex:1;"><h3>Scampedia</h3><p class="text-sm text-gray">Learn scams</p></div>
+            </a>
+            <a href="scam-impact.html" class="nav-card">
+                <div class="nav-icon gradient-red">📉</div>
+                <div style="flex:1;"><h3>Scam Impact</h3><p class="text-sm text-gray">Real stats</p></div>
+            </a>
+            <a href="settings.html" class="nav-card">
+                <div class="nav-icon gradient-gray">⚙️</div>
+                <div style="flex:1;"><h3>Settings</h3><p class="text-sm text-gray">Reset & Data</p></div>
+            </a>
+
+            <div style="background:#1f2937; padding:1.5rem; border-radius:1rem; margin-top:2rem;">
+                <h3 class="mb-4">Quick Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-card"><p class="stat-value" id="scenarios-completed">0</p><p class="stat-label">Scenarios</p></div>
+                    <div class="stat-card"><p class="stat-value text-green" id="achievements-count">0</p><p class="stat-label">Badges</p></div>
+                    <div class="stat-card"><p class="stat-value text-yellow" id="trophy-count">0</p><p class="stat-label">Trophies</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="badge-popup" class="badge-popup-overlay hidden">
+        <div class="badge-popup">
+            <div class="text-center">
+                <h2 id="popup-badge-type">Badge Unlocked!</h2>
+                <h3 class="mb-3 text-yellow" id="popup-badge-title">-</h3>
+                <p class="text-sm text-gray" id="popup-badge-description">-</p>
+                <button class="btn btn-primary mt-6" onclick="closeBadgePopup()">Nice!</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        const user = getCurrentUser();
+        if (!user) window.location.href = 'login.html';
+
+        const achievements = getAchievements();
+        const scenarios = getCompletedScenarios();
+        const badgeCount = Object.keys(achievements).length;
+
+        document.getElementById('badge-count').textContent = badgeCount;
+        document.getElementById('scenarios-completed').textContent = scenarios.length;
+        document.getElementById('achievements-count').textContent = badgeCount;
+        document.getElementById('trophy-count').textContent = achievements.master_trophy ? 1 : 0;
+
+        checkPendingBadge();
+    </script>
+</body>
+</html>

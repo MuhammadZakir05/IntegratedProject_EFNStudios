@@ -3,69 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scampedia</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Scampedia - Scam Awareness Simulator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app-frame">
-        <div id="app-content">
-            <div class="header">
-                <span>Scampedia</span>
-            </div>
-
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search scam types...">
-            </div>
-
-            <div class="tag-scroll">
-                <div class="tag active">All</div>
-                <div class="tag">Social Engineering</div>
-                <div class="tag">Financial</div>
-                <div class="tag">Cyber</div>
-            </div>
-
-            <div class="card" style="display:flex; gap:15px; align-items:center;">
-                <div style="width:50px; height:50px; background:linear-gradient(135deg, #3b82f6, #06b6d4); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:1.2rem;">
-                    <i class="fas fa-comment-dots"></i>
-                </div>
-                <div>
-                    <div style="font-weight:bold;">Impersonation Scam</div>
-                    <div style="font-size:0.8rem; color:#888;">Social Engineering</div>
-                </div>
-                <i class="fas fa-chevron-right" style="margin-left:auto; color:#444;"></i>
-            </div>
-
-            <div class="card" style="display:flex; gap:15px; align-items:center;">
-                <div style="width:50px; height:50px; background:linear-gradient(135deg, #d946ef, #f43f5e); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:1.2rem;">
-                    <i class="fas fa-briefcase"></i>
-                </div>
-                <div>
-                    <div style="font-weight:bold;">Job Offer Scam</div>
-                    <div style="font-size:0.8rem; color:#888;">Financial Fraud</div>
-                </div>
-                <i class="fas fa-chevron-right" style="margin-left:auto; color:#444;"></i>
-            </div>
-
-            <div class="card" style="display:flex; gap:15px; align-items:center;">
-                <div style="width:50px; height:50px; background:linear-gradient(135deg, #f97316, #ef4444); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:1.2rem;">
-                    <i class="fas fa-university"></i>
-                </div>
-                <div>
-                    <div style="font-weight:bold;">Phishing Attack</div>
-                    <div style="font-size:0.8rem; color:#888;">Cyber Crime</div>
-                </div>
-                <i class="fas fa-chevron-right" style="margin-left:auto; color:#444;"></i>
-            </div>
-
+    <div class="page">
+        <div class="scenario-header">
+            <a href="dashboard.html" class="back-btn">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="19" y1="12" x2="5" y2="12"/>
+                    <polyline points="12 19 5 12 12 5"/>
+                </svg>
+                <span>Back</span>
+            </a>
+            <h1 class="text-center mb-2">Scampedia</h1>
+            <p class="text-center text-gray text-sm">Learn about different types of scams</p>
         </div>
 
-        <div class="nav-bar">
-            <a href="home.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
-            <a href="scampedia.html" class="nav-item active"><i class="fas fa-book"></i><span>Learn</span></a>
-            <a href="profile.html" class="nav-item"><i class="fas fa-user"></i><span>Profile</span></a>
+        <div class="container">
+            <!-- Phishing Scams -->
+            <div class="collapsible-card">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <div>
+                        <h3>Phishing Scams</h3>
+                        <p class="text-sm text-gray mt-1">Email and message-based fraud</p>
+                    </div>
+                    <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+                <div class="collapsible-content">
+                    <p class="text-sm mb-3">Phishing scams trick victims into revealing sensitive information through fake emails or messages that appear to be from legitimate sources.</p>
+                    <p class="text-sm mb-2"><strong>Common Signs:</strong></p>
+                    <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm text-gray">
+                        <li>Suspicious email addresses or URLs</li>
+                        <li>Urgent language demanding immediate action</li>
+                        <li>Requests for personal or financial information</li>
+                        <li>Poor grammar and spelling errors</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Investment Scams -->
+            <div class="collapsible-card">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <div>
+                        <h3>Investment Scams</h3>
+                        <p class="text-sm text-gray mt-1">Fake opportunities and ponzi schemes</p>
+                    </div>
+                    <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+                <div class="collapsible-content">
+                    <p class="text-sm mb-3">Investment scams promise high returns with little or no risk. They often use social pressure and fake testimonials to lure victims.</p>
+                    <p class="text-sm mb-2"><strong>Warning Signs:</strong></p>
+                    <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm text-gray">
+                        <li>Guaranteed or unusually high returns</li>
+                        <li>Pressure to invest quickly</li>
+                        <li>Unregistered investment opportunities</li>
+                        <li>Complex strategies that are hard to understand</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Employment Scams -->
+            <div class="collapsible-card">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <div>
+                        <h3>Employment Scams</h3>
+                        <p class="text-sm text-gray mt-1">Fake job offers and work-from-home schemes</p>
+                    </div>
+                    <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+                <div class="collapsible-content">
+                    <p class="text-sm mb-3">Employment scams offer fake jobs that require upfront payments or steal personal information during the "application" process.</p>
+                    <p class="text-sm mb-2"><strong>Red Flags:</strong></p>
+                    <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm text-gray">
+                        <li>Job offers without an application or interview</li>
+                        <li>Requests for money for training or equipment</li>
+                        <li>Vague job descriptions</li>
+                        <li>Unrealistic salary for the work required</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Romance Scams -->
+            <div class="collapsible-card">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <div>
+                        <h3>Romance Scams</h3>
+                        <p class="text-sm text-gray mt-1">Fake relationships for financial gain</p>
+                    </div>
+                    <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+                <div class="collapsible-content">
+                    <p class="text-sm mb-3">Romance scammers create fake profiles on dating sites and social media to build relationships, then ask for money.</p>
+                    <p class="text-sm mb-2"><strong>Warning Signs:</strong></p>
+                    <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm text-gray">
+                        <li>Professes love very quickly</li>
+                        <li>Claims to be overseas or unable to meet in person</li>
+                        <li>Asks for money for emergencies or travel</li>
+                        <li>Avoids video calls or in-person meetings</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tech Support Scams -->
+            <div class="collapsible-card">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <div>
+                        <h3>Tech Support Scams</h3>
+                        <p class="text-sm text-gray mt-1">Fake technical assistance</p>
+                    </div>
+                    <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+                <div class="collapsible-content">
+                    <p class="text-sm mb-3">Scammers pose as tech support from well-known companies, claiming your computer has a virus or security issue.</p>
+                    <p class="text-sm mb-2"><strong>Common Tactics:</strong></p>
+                    <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm text-gray">
+                        <li>Unsolicited pop-ups claiming virus infection</li>
+                        <li>Cold calls from "Microsoft" or "Apple"</li>
+                        <li>Request remote access to your computer</li>
+                        <li>Charge for unnecessary services or software</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- General Protection Tips -->
+            <div class="info-card" style="margin-top: 2rem; background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1)); border-color: rgba(16, 185, 129, 0.3);">
+                <h3 class="mb-3 text-green">General Protection Tips</h3>
+                <ul style="list-style: disc; padding-left: 1.5rem;" class="text-sm">
+                    <li class="mb-2">Always verify before you trust - check official websites and phone numbers</li>
+                    <li class="mb-2">Never share personal or financial information through unsecured channels</li>
+                    <li class="mb-2">Be skeptical of offers that seem too good to be true</li>
+                    <li class="mb-2">Use strong, unique passwords and enable two-factor authentication</li>
+                    <li class="mb-2">Keep your software and security systems updated</li>
+                    <li class="mb-2">Report suspected scams to authorities immediately</li>
+                </ul>
+            </div>
         </div>
     </div>
+    <div id="badge-popup" class="badge-popup-overlay hidden">
+        <div class="badge-popup">
+            <h2 id="popup-badge-type">Badge Unlocked!</h2>
+            <h3 id="popup-badge-title"></h3>
+            <p id="popup-badge-description"></p>
+            <button class="btn btn-primary" onclick="closeBadgePopup()">OK</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if (!getCurrentUser()) window.location.href = 'login.html';
+        
+        // Unlock Logic
+        unlockAchievement('scampedia_visited', {
+            title: 'Knowledge Seeker',
+            description: 'You explored the Scampedia!',
+            type: 'badge'
+        });
+        
+        checkPendingBadge();
+    </script>
 </body>
 </html>

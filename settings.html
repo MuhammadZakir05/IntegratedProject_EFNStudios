@@ -3,89 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Settings - Scam Awareness Simulator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app-frame">
-        <div id="app-content">
-            <div class="header">
-                <a href="home.html"><i class="fas fa-arrow-left"></i></a>
-                <span>Settings</span>
-                <div></div>
-            </div>
+    <div class="page">
+        <div class="scenario-header">
+            <a href="dashboard.html" class="back-btn">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="19" y1="12" x2="5" y2="12"/>
+                    <polyline points="12 19 5 12 12 5"/>
+                </svg>
+                <span>Back</span>
+            </a>
+            <h1 class="text-center mb-2">Settings</h1>
+            <p class="text-center text-gray text-sm">Customize your experience</p>
+        </div>
 
-            <div class="card">
-                <div class="setting-row">
-                    <div style="display:flex; gap:15px; align-items:center;">
-                        <div style="width:40px; height:40px; background:#222; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#a855f7;">
-                            <i class="fas fa-moon"></i>
-                        </div>
-                        <div>
-                            <div style="font-weight:bold;">Dark Mode</div>
-                            <div style="font-size:0.8rem; color:#888;">Enabled by default</div>
-                        </div>
-                    </div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        <div class="container">
+            <div class="info-card">
+                <h2 class="mb-4">👤 Account Information</h2>
+                <div class="mb-3">
+                    <p class="text-xs text-gray mb-1">Full Name</p>
+                    <p id="settings-fullname">-</p>
+                </div>
+                <div class="mb-3">
+                    <p class="text-xs text-gray mb-1">Username</p>
+                    <p id="settings-username">-</p>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="setting-row">
-                    <div style="display:flex; gap:15px; align-items:center;">
-                        <div style="width:40px; height:40px; background:#222; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#22c55e;">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div>
-                            <div style="font-weight:bold;">Notifications</div>
-                            <div style="font-size:0.8rem; color:#888;">Get app updates</div>
-                        </div>
-                    </div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                </div>
+            <div class="info-card mt-6">
+                <h2 class="mb-4">⚠️ Data Management</h2>
+                <p class="text-sm text-gray mb-4">Resetting your progress will delete all badges, scenario history, and restore your virtual balance to $5,000.</p>
+                
+                <button class="btn btn-secondary" onclick="handleReset()">
+                    Reset All Progress
+                </button>
             </div>
 
-            <div class="card" onclick="location.href='about.html'" style="cursor:pointer;">
-                <div class="setting-row">
-                    <div style="display:flex; gap:15px; align-items:center;">
-                        <div style="width:40px; height:40px; background:#222; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#3b82f6;">
-                            <i class="fas fa-info-circle"></i>
-                        </div>
-                        <div>
-                            <div style="font-weight:bold;">About</div>
-                            <div style="font-size:0.8rem; color:#888;">Version 1.0.0</div>
-                        </div>
-                    </div>
-                    <i class="fas fa-chevron-right" style="color:#444;"></i>
-                </div>
-            </div>
-
-            <div style="height:30px;"></div>
-            
-            <div style="padding:0 10px;">
-                <h4 style="color:#ef4444; margin-bottom:10px;">Danger Zone</h4>
-                <button class="btn btn-danger" onclick="resetApp()">Reset All Progress</button>
-                <button class="btn btn-outline" onclick="DB.logout()">Log Out</button>
-            </div>
-
+            <button class="btn btn-secondary mt-6" style="border-color: #ef4444; color: #ef4444;" onclick="handleLogout()">
+                Log Out
+            </button>
         </div>
     </div>
 
-    <script src="db.js"></script>
+    <script src="app.js"></script>
     <script>
-        async function resetApp() {
-            if(confirm("Are you sure? This will delete all your history and badges.")) {
-                let u = await DB.getUser();
-                if(u) {
-                    await fetch(`${CONFIG.DB_URL}/${u._id}`, {
-                        method: 'PATCH',
-                        headers: DB.headers,
-                        body: JSON.stringify({ balance: 5000, history: [], badges: [] })
-                    });
-                    alert("Account Reset.");
-                    window.location.href = 'home.html';
-                }
+        // 1. Check Login
+        const user = getCurrentUser();
+        if (!user) window.location.href = 'login.html';
+
+        // 2. Fill User Info
+        document.getElementById('settings-fullname').textContent = user.fullName || 'User';
+        document.getElementById('settings-username').textContent = user.username;
+
+        // 3. Reset Logic (Local Storage Version)
+        function handleReset() {
+            if (confirm('Are you sure you want to reset all your progress? This cannot be undone.')) {
+                
+                // A. Reset Badges & Achievements
+                localStorage.setItem('achievements', '{}');
+                
+                // B. Reset Completed Levels
+                localStorage.setItem('completedScenarios', '[]');
+                
+                // C. Reset Win/Loss History (Fixes Scam Impact Balance)
+                localStorage.setItem('scenarioResults', '{}');
+                
+                // D. Reset Trophy Status
+                localStorage.removeItem('trophyClaimed');
+                localStorage.removeItem('pendingBadge');
+
+                alert('Progress has been reset! Your balance is back to $5,000.');
+                window.location.reload();
+            }
+        }
+
+        // 4. Logout Logic
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
             }
         }
     </script>

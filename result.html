@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page">
+        <div class="result-header" id="result-header">
+            <h1 id="result-title">Result</h1>
+            <p id="result-description">-</p>
+        </div>
+        <div class="container">
+            <div class="info-card">
+                <h2>Tactics Used</h2>
+                <div id="tactics-list"></div>
+            </div>
+            <a href="scenario-selection.html" class="btn btn-primary">Next Scenario</a>
+            <a href="dashboard.html" class="btn btn-secondary mt-4">Home</a>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if (!getCurrentUser()) window.location.href = 'login.html';
+
+        const data = JSON.parse(sessionStorage.getItem('resultData') || '{}');
+        if(!data.choice) window.location.href = 'dashboard.html';
+
+        const header = document.getElementById('result-header');
+        if(data.choice === 'disagree') {
+            header.style.background = 'rgba(16,185,129,0.2)';
+            document.getElementById('result-title').innerText = "Safe!";
+            document.getElementById('result-description').innerText = "You avoided the scam.";
+        } else {
+            header.style.background = 'rgba(239,68,68,0.2)';
+            document.getElementById('result-title').innerText = "Scammed";
+            document.getElementById('result-description').innerText = "You lost money. Be careful!";
+        }
+
+        const list = document.getElementById('tactics-list');
+        data.tactics.forEach(t => {
+            list.innerHTML += `<div class="info-item"><p>${t}</p></div>`;
+        });
+
+        checkPendingBadge();
+    </script>
+</body>
+</html>

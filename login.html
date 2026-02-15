@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Scam Awareness Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page">
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h1>Scam Awareness</h1>
+                <p class="text-sm text-gray">Simulator</p>
+            </div>
+
+            <div class="form-card">
+                <h2 class="mb-6">Welcome Back</h2>
+
+                <div class="input-group">
+                    <label class="input-label">Username</label>
+                    <div class="input-wrapper">
+                        <svg class="input-icon icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <input type="text" id="login-username" class="input-field" placeholder="Enter your username">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Password</label>
+                    <div class="input-wrapper">
+                        <svg class="input-icon icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <input type="password" id="login-password" class="input-field" placeholder="Enter your password">
+                        <svg class="input-icon-right icon" onclick="togglePassword('login-password')" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                </div>
+
+                <a href="forgot-password.html" class="text-link text-sm mb-6" style="display: block;">Forgot Password?</a>
+                <button class="btn btn-primary mb-4" onclick="handleLogin()">Log In</button>
+
+                <div class="text-center">
+                    <span class="text-sm text-gray">Don't have an account? </span>
+                    <a href="signup.html" class="text-link text-sm">Sign Up</a>
+                </div>
+                <div id="login-error" class="error-message hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        async function handleLogin() {
+            const u = document.getElementById('login-username').value;
+            const p = document.getElementById('login-password').value;
+
+            if (!u || !p) return showError('login-error', 'Enter username and password');
+
+            const btn = document.querySelector('.btn-primary');
+            btn.innerText = "Verifying...";
+            
+            // Connect to DB
+            const success = await DB.login(u, p);
+            
+            if (success) {
+                window.location.href = 'dashboard.html';
+            } else {
+                showError('login-error', 'Invalid credentials');
+                btn.innerText = "Log In";
+            }
+        }
+    </script>
+</body>
+</html>

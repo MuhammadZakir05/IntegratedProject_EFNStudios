@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenarios</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page">
+        <div class="scenario-header">
+            <a href="dashboard.html" class="back-btn">← Back</a>
+            <h1 class="text-center mb-2">Choose Scenario</h1>
+        </div>
+
+        <div class="container">
+            <a href="telegram-scam.html" class="nav-card">
+                <div class="nav-icon gradient-blue">💬</div>
+                <div style="flex:1;"><h3>Telegram Scam</h3><p class="text-sm text-gray">Investment Fraud</p></div>
+            </a>
+            <a href="job-scam.html" class="nav-card">
+                <div class="nav-icon gradient-purple">💼</div>
+                <div style="flex:1;"><h3>Job Scam</h3><p class="text-sm text-gray">Employment Fraud</p></div>
+            </a>
+            <a href="bank-phishing.html" class="nav-card">
+                <div class="nav-icon gradient-red">🏦</div>
+                <div style="flex:1;"><h3>Bank Phishing</h3><p class="text-sm text-gray">SMS Alert</p></div>
+            </a>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        if (!getCurrentUser()) window.location.href = 'login.html';
+    </script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scam Impact - Scam Awareness Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page">
+        <div class="scenario-header">
+            <a href="dashboard.html" class="back-btn">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="19" y1="12" x2="5" y2="12"/>
+                    <polyline points="12 19 5 12 12 5"/>
+                </svg>
+                <span>Back</span>
+            </a>
+            <h1 class="text-center mb-2">Your Financial Impact</h1>
+            <p class="text-center text-gray text-sm">Track your virtual account balance</p>
+        </div>
+
+        <div class="container">
+            <div class="info-card" style="background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1)); border-color: rgba(16, 185, 129, 0.3);">
+                <div class="text-center mb-4">
+                    <p class="text-sm text-gray mb-2">Current Account Balance</p>
+                    <h1 id="account-balance" style="font-size: 2.5rem; color: #10b981;">$5,000.00</h1>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card" style="background: rgba(16, 185, 129, 0.1);">
+                        <p class="stat-value text-green" id="money-saved">$0</p>
+                        <p class="stat-label">Money Saved</p>
+                    </div>
+                    <div class="stat-card" style="background: rgba(239, 68, 68, 0.1);">
+                        <p class="stat-value text-red" id="money-lost">$0</p>
+                        <p class="stat-label">Money Lost</p>
+                    </div>
+                    <div class="stat-card" style="background: rgba(59, 130, 246, 0.1);">
+                        <p class="stat-value text-blue" id="scenarios-completed-impact">0</p>
+                        <p class="stat-label">Scenarios</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card mt-6">
+                <h2 class="mb-4">📊 Transaction History</h2>
+                <div id="transaction-history">
+                    <div class="text-center" style="padding: 2rem;">
+                        <p class="text-gray">No transactions yet</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card mt-6" id="status-card">
+                <h2 class="mb-4">💰 Financial Status</h2>
+                <div id="status-content">
+                    <p>Complete scenarios to analyze your performance...</p>
+                </div>
+            </div>
+
+            <div class="info-card mt-6">
+                <h2 class="mb-4">🎯 Scenario Impact Breakdown</h2>
+                <div id="scenario-breakdown">
+                    
+                    <div class="collapsible-card" style="border-radius: 0.75rem; margin-bottom: 1rem;" id="telegram-scam-breakdown">
+                        <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                            <div class="flex items-center gap-3">
+                                <div style="width: 3rem; height: 3rem; background: linear-gradient(to bottom right, #3b82f6, #06b6d4); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="icon" viewBox="0 0 24 24" style="color: white;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm mb-1"><strong>Telegram Investment Scam</strong></p>
+                                    <p class="text-xs text-gray status-text">Not completed</p>
+                                </div>
+                            </div>
+                            <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
+                        <div class="collapsible-content">
+                            <p class="text-sm text-gray">Complete this scenario to see your financial impact</p>
+                        </div>
+                    </div>
+
+                    <div class="collapsible-card" style="border-radius: 0.75rem; margin-bottom: 1rem;" id="job-scam-breakdown">
+                        <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                            <div class="flex items-center gap-3">
+                                <div style="width: 3rem; height: 3rem; background: linear-gradient(to bottom right, #a855f7, #ec4899); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="icon" viewBox="0 0 24 24" style="color: white;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm mb-1"><strong>Job Scam</strong></p>
+                                    <p class="text-xs text-gray status-text">Not completed</p>
+                                </div>
+                            </div>
+                            <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
+                        <div class="collapsible-content">
+                            <p class="text-sm text-gray">Complete this scenario to see your financial impact</p>
+                        </div>
+                    </div>
+
+                    <div class="collapsible-card" style="border-radius: 0.75rem;" id="bank-phishing-breakdown">
+                        <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                            <div class="flex items-center gap-3">
+                                <div style="width: 3rem; height: 3rem; background: linear-gradient(to bottom right, #ef4444, #f97316); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg class="icon" viewBox="0 0 24 24" style="color: white;"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm mb-1"><strong>Bank Phishing</strong></p>
+                                    <p class="text-xs text-gray status-text">Not completed</p>
+                                </div>
+                            </div>
+                            <svg class="icon chevron-icon" viewBox="0 0 24 24" style="color: #9ca3af; transition: transform 0.3s;"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
+                        <div class="collapsible-content">
+                            <p class="text-sm text-gray">Complete this scenario to see your financial impact</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="badge-popup" class="badge-popup-overlay hidden">
+        <div class="badge-popup">
+            <button class="close-btn" onclick="closeBadgePopup()"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            <div class="text-center">
+                <div class="badge-icon" id="popup-badge-icon" style="background: linear-gradient(to bottom right, #3b82f6, #9333ea);">
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 3rem; height: 3rem; color: white;"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                </div>
+                <h3 class="mb-3 text-yellow" id="popup-badge-title">Achievement</h3>
+                <p class="text-sm text-gray" id="popup-badge-description">Unlocked</p>
+                <button class="btn btn-primary mt-6" onclick="closeBadgePopup()">Awesome!</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Check Login
+        const currentUser = getCurrentUser();
+        if (!currentUser) window.location.href = 'login.html';
+
+        // Constants
+        const STARTING_BALANCE = 5000;
+        const SCENARIO_IMPACTS = {
+            'telegram-scam': { name: 'Telegram Investment', agree: -500, disagree: 0 },
+            'job-scam': { name: 'Job Scam', agree: -449, disagree: 0 },
+            'bank-phishing': { name: 'Bank Phishing', agree: -2500, disagree: 0 }
+        };
+
+        // Main Logic
+        function loadImpactData() {
+            // 1. Get data from LocalStorage (Saved by app.js)
+            const results = JSON.parse(localStorage.getItem('scenarioResults') || '{}');
+            const scenarios = getCompletedScenarios(); // from app.js
+
+            let totalLost = 0;
+            let totalSaved = 0;
+
+            // 2. Calculate Balance & History
+            const historyDiv = document.getElementById('transaction-history');
+            let historyHTML = '';
+
+            // Loop through known scenarios
+            Object.keys(SCENARIO_IMPACTS).forEach(id => {
+                if (results[id]) {
+                    const choice = results[id];
+                    const impact = SCENARIO_IMPACTS[id][choice] || 0;
+                    
+                    if (impact < 0) totalLost += Math.abs(impact);
+                    else if (choice === 'disagree') totalSaved += Math.abs(SCENARIO_IMPACTS[id].agree);
+
+                    // Add to History List
+                    historyHTML += `
+                        <div class="info-item" style="border-left: 3px solid ${impact < 0 ? '#ef4444' : '#10b981'};">
+                            <div style="flex:1;">
+                                <div class="flex justify-between mb-1">
+                                    <p class="text-sm"><strong>${SCENARIO_IMPACTS[id].name}</strong></p>
+                                    <p class="text-sm" style="color:${impact < 0 ? '#ef4444' : '#10b981'}; font-weight:bold;">
+                                        ${impact < 0 ? '-' : '+'}$${Math.abs(impact).toLocaleString()}
+                                    </p>
+                                </div>
+                                <p class="text-xs text-gray">
+                                    ${choice === 'agree' ? '❌ Fell for scam' : choice === 'disagree' ? '✅ Avoided scam' : '⚠️ Risky'}
+                                </p>
+                            </div>
+                        </div>
+                    `;
+
+                    // Update Breakdown Cards
+                    updateBreakdown(id, choice, impact);
+                }
+            });
+
+            if (historyHTML === '') historyHTML = `<div class="text-center" style="padding:2rem;"><p class="text-gray">No transactions yet.</p></div>`;
+            historyDiv.innerHTML = historyHTML;
+
+            // 3. Update Totals
+            document.getElementById('account-balance').textContent = '$' + (STARTING_BALANCE - totalLost).toLocaleString();
+            document.getElementById('money-lost').textContent = '$' + totalLost.toLocaleString();
+            document.getElementById('money-saved').textContent = '$' + totalSaved.toLocaleString();
+            document.getElementById('scenarios-completed-impact').textContent = scenarios.length;
+
+            // 4. Update Status Card
+            const statusContent = document.getElementById('status-content');
+            if (totalLost === 0 && scenarios.length > 0) {
+                document.getElementById('status-card').style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                statusContent.innerHTML = `<h3 class="text-green mb-1">Excellent Protection!</h3><p class="text-sm">You haven't lost a single dollar.</p>`;
+            } else if (totalLost > 0) {
+                document.getElementById('status-card').style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                statusContent.innerHTML = `<h3 class="text-red mb-1">Financial Risk!</h3><p class="text-sm">You have lost $${totalLost.toLocaleString()} to scams.</p>`;
+            }
+        }
+
+        function updateBreakdown(id, choice, impact) {
+            const card = document.getElementById(id + '-breakdown');
+            if(!card) return;
+            const statusText = card.querySelector('.status-text');
+            const content = card.querySelector('.collapsible-content');
+
+            if (choice === 'agree') {
+                statusText.innerHTML = `<span style="color:#ef4444">❌ Lost $${Math.abs(impact)}</span>`;
+                content.innerHTML = `<p class="text-sm">You fell for this scam. Review the red flags!</p>`;
+            } else if (choice === 'disagree') {
+                statusText.innerHTML = `<span style="color:#10b981">✅ Safe</span>`;
+                content.innerHTML = `<p class="text-sm">Great job! You identified the scam.</p>`;
+            } else {
+                statusText.innerHTML = `<span style="color:#eab308">⚠️ Risky</span>`;
+                content.innerHTML = `<p class="text-sm">You engaged with the scammer. This is risky.</p>`;
+            }
+        }
+
+        // Run Logic
+        loadImpactData();
+
+        // Unlock Badge
+        unlockAchievement('scam_impact_visited', {
+            title: 'Aware Citizen', description: 'You viewed your financial impact stats!', type: 'badge'
+        });
+        checkPendingBadge();
+    </script>
+</body>
+</html>

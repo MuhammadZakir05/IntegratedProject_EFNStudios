@@ -3,136 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* BADGE SLOT STYLES */
-        .badge-slot {
-            height: 140px;
-            background: #111; border: 1px dashed #333;
-            border-radius: 20px;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            color: #444; margin-top: 20px;
-            transition: 0.3s;
-        }
-        
-        /* UNLOCKED STYLE (Glowing Gold for Medal) */
-        .badge-slot.unlocked {
-            background: linear-gradient(135deg, #2a1a00, #000);
-            border: 1px solid #fbbf24; /* Gold Border */
-            box-shadow: 0 0 20px rgba(251, 191, 36, 0.2); /* Gold Glow */
-            color: #fbbf24; cursor: pointer;
-        }
-
-        /* 3D VIEWER OVERLAY */
-        #model-viewer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: black; z-index: 9999;
-            display: flex; flex-direction: column;
-        }
-        
-        iframe { border: none; width: 100%; height: 100%; }
-        
-        .close-btn {
-            position: absolute; top: 30px; right: 30px;
-            background: rgba(0,0,0,0.8); color: white;
-            border: 1px solid #333; padding: 12px 25px;
-            border-radius: 30px; font-weight: bold; cursor: pointer;
-            z-index: 10000;
-        }
-    </style>
+    <title>Profile - Scam Awareness Simulator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app-frame">
-        <div id="app-content">
-            
-            <div class="card" style="text-align:center; padding:30px;">
-                <i class="fas fa-user-circle" style="font-size:4rem; margin-bottom:15px; color:#3b82f6;"></i>
-                <h2 id="p-name" style="margin:0;">User</h2>
-                <p id="p-email" style="color:#888;">loading...</p>
-                <div style="font-size:0.8rem; color:#22c55e; margin-top:5px;">● Active Agent</div>
+    <div class="page">
+        <div class="profile-header">
+            <a href="dashboard.html" class="back-btn">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="19" y1="12" x2="5" y2="12"/>
+                    <polyline points="12 19 5 12 12 5"/>
+                </svg>
+                <span>Back</span>
+            </a>
+
+            <div class="text-center">
+                <div class="profile-avatar" id="profile-avatar">U</div>
+                <h1 class="mb-1" id="profile-name">User</h1>
+                <p class="text-sm text-gray">Scam Awareness Champion</p>
             </div>
 
-            <div class="card">
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                    <span style="color:#888;">Safety Score</span>
-                    <span id="p-score" style="color:white; font-weight:bold;">0 XP</span>
+            <div class="stats-grid mt-6">
+                <div class="stat-card">
+                    <p class="stat-value text-blue" id="profile-achievements">0</p>
+                    <p class="stat-label">Achievements</p>
                 </div>
-                <div style="display:flex; gap:10px;">
-                    <div style="flex:1; background:#1a0505; border:1px solid #ef4444; border-radius:12px; padding:15px; text-align:center;">
-                        <div style="color:#ef4444; font-size:0.8rem;">LOST</div>
-                        <div id="p-lost" style="color:white; font-weight:bold; font-size:1.2rem;">$0</div>
-                    </div>
-                    <div style="flex:1; background:#051a05; border:1px solid #22c55e; border-radius:12px; padding:15px; text-align:center;">
-                        <div style="color:#22c55e; font-size:0.8rem;">WINS</div>
-                        <div id="p-wins" style="color:white; font-weight:bold; font-size:1.2rem;">0</div>
-                    </div>
+                <div class="stat-card">
+                    <p class="stat-value text-green" id="profile-scenarios">0</p>
+                    <p class="stat-label">Scenarios</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-value text-yellow" id="profile-trophies">0</p>
+                    <p class="stat-label">Trophies</p>
                 </div>
             </div>
-
-            <h3 style="margin-top:30px;">Achievements</h3>
-            
-            <div id="badge-area" class="badge-slot">
-                <i class="fas fa-lock" style="font-size:1.5rem; margin-bottom:5px;"></i>
-                <div style="font-size:0.9rem;">Complete 3 Scenarios</div>
-            </div>
-
-            <button class="btn btn-outline" style="margin-top:40px;" onclick="DB.logout()">Log Out</button>
         </div>
 
-        <div class="nav-bar">
-            <a href="home.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
-            <a href="simulation.html" class="nav-item"><i class="fas fa-gamepad"></i><span>Sim</span></a>
-            <a href="scampedia.html" class="nav-item"><i class="fas fa-book"></i><span>Learn</span></a>
-            <a href="profile.html" class="nav-item active"><i class="fas fa-user"></i><span>Profile</span></a>
+        <div class="container">
+            <h2 class="mb-4">Master Trophy</h2>
+            <div class="trophy-card" id="trophy-card">
+                </div>
+
+            <h2 class="mb-4 mt-8">Badges</h2>
+            <div class="badges-grid" id="badges-container"></div>
+
+            <h2 class="mb-4 mt-8">Milestones</h2>
+            <div id="milestones-container">
+                </div>
         </div>
     </div>
 
-    <div id="model-viewer" class="hidden">
-        <button class="close-btn" onclick="close3D()">CLOSE ✕</button>
-        
-        <iframe 
-            title="My Medal" 
-            allow="autoplay; fullscreen; xr-spatial-tracking" 
-            src="https://sketchfab.com/models/d07b43d11c574df698c50598dfb97544/embed">
-        </iframe>
-
-    </div>
-
-    <script src="db.js"></script>
+    <script src="app.js"></script>
     <script>
-        async function load() {
-            let u = await DB.getUser();
-            if(!u) return window.location.href = 'index.html';
+        // Check Login
+        const currentUser = getCurrentUser();
+        if (!currentUser) window.location.href = 'login.html';
 
-            document.getElementById('p-name').innerText = u.fullname || u.username;
-            document.getElementById('p-email').innerText = u.email || "No Email";
-            
-            let start = u.startBalance || 5000;
-            document.getElementById('p-lost').innerText = `$${start - u.balance}`;
-            let wins = u.history ? u.history.filter(h=>h.status==='passed').length : 0;
-            document.getElementById('p-wins').innerText = wins;
-            document.getElementById('p-score').innerText = (wins * 100) + " XP";
+        // Load Stats
+        const achievements = getAchievements();
+        const scenarios = getCompletedScenarios();
 
-            // CHECK IF UNLOCKED
-            if (u.badges && u.badges.includes('badge_3d_shield')) {
-                let badge = document.getElementById('badge-area');
-                badge.className = "badge-slot unlocked";
-                badge.innerHTML = `
-                    <i class="fas fa-medal" style="font-size:2.5rem; margin-bottom:10px;"></i>
-                    <div style="font-weight:bold; font-size:1.1rem;">Honor Medal</div>
-                    <div style="font-size:0.75rem; opacity:0.8;">Tap to Inspect 3D Model</div>
-                `;
-                badge.onclick = open3D;
-            }
+        // Update Header
+        const avatar = document.getElementById('profile-avatar');
+        const name = document.getElementById('profile-name');
+        
+        if (currentUser) {
+            avatar.textContent = (currentUser.fullName || currentUser.username || 'U')[0].toUpperCase();
+            name.textContent = currentUser.fullName || currentUser.username || 'User';
         }
 
-        function open3D() { document.getElementById('model-viewer').classList.remove('hidden'); }
-        function close3D() { document.getElementById('model-viewer').classList.add('hidden'); }
+        const badgeCount = getAchievementCount();
+        const trophyCount = achievements.master_trophy ? 1 : 0;
 
-        load();
+        document.getElementById('profile-achievements').textContent = badgeCount;
+        document.getElementById('profile-scenarios').textContent = scenarios.length;
+        document.getElementById('profile-trophies').textContent = trophyCount;
+
+        // --- 1. TROPHY LOGIC (Top Card - Claim System) ---
+        const trophyCard = document.getElementById('trophy-card');
+        const isUnlocked = achievements.master_trophy;
+        const isClaimed = localStorage.getItem('trophyClaimed') === 'true';
+        const trophyTotal = 7; 
+        const currentProgress = badgeCount;
+        const trophyPct = Math.min((currentProgress / trophyTotal) * 100, 100);
+
+        if (isUnlocked) {
+            if (isClaimed) {
+                // CLAIMED: Show Trophy Model
+                trophyCard.classList.add('unlocked');
+                trophyCard.style.padding = "0";
+                trophyCard.style.overflow = "hidden";
+                trophyCard.innerHTML = `
+                    <div style="position: relative; width: 100%; height: 320px;">
+                        <iframe title="Master Protector" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/beb3de83add44d0faa93f59583492ab2/embed?autostart=1&ui_controls=0&ui_infos=0&ui_inspector=0&ui_watermark=0&transparent=1" style="width: 100%; height: 100%; border: none;"></iframe>
+                        <div style="position:absolute; bottom:0; left:0; width:100%; background:linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding:20px; pointer-events:none;">
+                            <h3 style="color: #facc15; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Master Protector</h3>
+                            <p class="text-sm text-gray mt-1">You are a certified scam expert!</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // UNLOCKED: Show Claim Button
+                trophyCard.classList.add('unlocked');
+                trophyCard.innerHTML = `
+                    <div style="text-align: center; padding: 10px;">
+                        <h3 style="color: #facc15; margin-bottom: 0.5rem;">Trophy Unlocked!</h3>
+                        <p class="text-sm text-gray mb-4">You have completed all training modules.</p>
+                        <button class="btn btn-primary" onclick="claimTrophy()" style="background: linear-gradient(to right, #facc15, #eab308); color: black; font-weight: bold; border: none;">CLAIM REWARD 🎁</button>
+                    </div>
+                `;
+            }
+        } else {
+            // LOCKED: Show Progress
+            trophyCard.innerHTML = `
+                <div class="trophy-content">
+                    <div class="trophy-icon" id="trophy-icon"><svg class="icon" viewBox="0 0 24 24" style="color: #6b7280;"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
+                    <div style="flex: 1;">
+                        <div class="flex items-center gap-2 mb-1"><h3 id="trophy-title">Master Protector</h3></div>
+                        <p class="text-sm text-gray mb-3">Unlock all achievements to claim</p>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1"><span class="text-gray">Progress</span><span class="text-gray">${currentProgress}/${trophyTotal}</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${trophyPct}%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function claimTrophy() {
+            localStorage.setItem('trophyClaimed', 'true');
+            window.location.reload(); 
+        }
+
+        // --- 2. BADGES (Standard) ---
+        const allBadges = [
+            { id: 'first_scenario', title: 'First Steps', description: 'Complete your first scenario', unlocked: achievements.first_scenario || false },
+            { id: 'telegram_master', title: 'Telegram Defender', description: 'Complete the Telegram scenario', unlocked: scenarios.includes('telegram-scam') },
+            { id: 'job_hunter', title: 'Job Scam Detective', description: 'Complete the Job scenario', unlocked: scenarios.includes('job-scam') },
+            { id: 'bank_guardian', title: 'Banking Guardian', description: 'Complete the Bank scenario', unlocked: scenarios.includes('bank-phishing') },
+            { id: 'knowledge_seeker', title: 'Knowledge Seeker', description: 'Read the Scampedia', unlocked: achievements.scampedia_visited || false },
+            { id: 'aware_citizen', title: 'Aware Citizen', description: 'View the Scam Impact page', unlocked: achievements.scam_impact_visited || false }
+        ];
+
+        const badgesContainer = document.getElementById('badges-container');
+        badgesContainer.innerHTML = '';
+        allBadges.forEach(badge => {
+            const badgeCard = document.createElement('div');
+            badgeCard.className = 'badge-card' + (badge.unlocked ? ' unlocked' : '');
+            badgeCard.innerHTML = `
+                <div class="badge-icon-small ${badge.unlocked ? 'unlocked' : ''}">
+                    <svg class="icon" viewBox="0 0 24 24" style="color: ${badge.unlocked ? 'white' : '#6b7280'};">
+                        ${badge.unlocked ? '<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>' : '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'}
+                    </svg>
+                </div>
+                <h4 style="color: ${badge.unlocked ? 'white' : '#6b7280'};">${badge.title}</h4>
+                <p class="text-xs text-gray mt-1">${badge.description}</p>
+            `;
+            badgesContainer.appendChild(badgeCard);
+        });
+
+        // --- 3. MILESTONE: SCENARIO MASTER (Medal Model) ---
+        const milestone = {
+            title: 'Scenario Master',
+            description: 'Complete all three scenarios',
+            unlocked: scenarios.length >= 3
+        };
+
+        const milestonesContainer = document.getElementById('milestones-container');
+        
+        if (milestone.unlocked) {
+            // UNLOCKED: Show Medal 3D Model
+            milestonesContainer.innerHTML = `
+                <div class="badge-card unlocked" style="border-radius: 1rem; overflow: hidden; padding: 0;">
+                    <div style="position: relative; width: 100%; height: 300px;">
+                        <iframe 
+                            title="Scenario Master Medal" 
+                            frameborder="0" 
+                            allowfullscreen 
+                            mozallowfullscreen="true" 
+                            webkitallowfullscreen="true" 
+                            allow="autoplay; fullscreen; xr-spatial-tracking" 
+                            xr-spatial-tracking 
+                            execution-while-out-of-viewport 
+                            execution-while-not-rendered 
+                            web-share 
+                            src="https://sketchfab.com/models/d07b43d11c574df698c50598dfb97544/embed?autostart=1&ui_controls=0&ui_infos=0&ui_inspector=0&ui_watermark=0&transparent=1" 
+                            style="width: 100%; height: 100%; border: none;">
+                        </iframe>
+                        <div style="position:absolute; bottom:0; left:0; width:100%; background:linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding:20px; pointer-events:none;">
+                            <h4 style="color: #fbbf24; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Scenario Master</h4>
+                            <p class="text-sm text-gray mt-1">You defended against all threats!</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            // LOCKED: Show Standard Icon
+            milestonesContainer.innerHTML = `
+                <div class="badge-card" style="border-radius: 1rem;">
+                    <div class="flex items-center gap-4">
+                        <div class="badge-icon-small" style="width: 3.5rem; height: 3.5rem;">
+                            <svg class="icon" viewBox="0 0 24 24" style="color: #6b7280;">
+                                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: #6b7280;">${milestone.title}</h4>
+                            <p class="text-sm text-gray mt-1">${milestone.description}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>

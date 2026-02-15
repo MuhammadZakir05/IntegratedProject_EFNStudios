@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Scam - Scam Awareness Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page">
+        <div class="scenario-header">
+            <a href="scenario-selection.html" class="back-btn">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="19" y1="12" x2="5" y2="12"/>
+                    <polyline points="12 19 5 12 12 5"/>
+                </svg>
+                <span>Back</span>
+            </a>
+            <h1 class="text-center mb-2">Telegram Investment Scam</h1>
+            <p class="text-center text-gray text-sm">Read the conversation carefully</p>
+        </div>
+
+        <div class="container">
+            <div class="chat-container">
+                <div class="message scammer">
+                    <p class="text-sm mb-1" style="color: #ef4444; font-weight: 600;">Unknown Contact</p>
+                    <p>Hi! I saw your profile and thought you'd be interested in a great investment opportunity! 💰</p>
+                </div>
+
+                <div class="message scammer">
+                    <p class="text-sm mb-1" style="color: #ef4444; font-weight: 600;">Unknown Contact</p>
+                    <p>We guarantee 50% returns in just 30 days. It's a limited time offer for selected individuals.</p>
+                </div>
+
+                <div class="message scammer">
+                    <p class="text-sm mb-1" style="color: #ef4444; font-weight: 600;">Unknown Contact</p>
+                    <p>Send $500 in crypto now to start earning. Don't miss out! 🚀</p>
+                </div>
+            </div>
+
+            <div class="choice-buttons">
+                <button class="btn btn-secondary" onclick="handleChoice('agree')">
+                    Send $500 (Sounds great!)
+                </button>
+                
+                <button class="btn btn-primary" onclick="handleChoice('disagree')">
+                    Block & Report
+                </button>
+                
+                <button class="btn btn-secondary" onclick="handleChoice('troll')">
+                    Ask for "free sample" crypto first
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if (!getCurrentUser()) window.location.href = 'login.html';
+
+        function handleChoice(choice) {
+            // 1. Save Progress (Win/Loss/Troll)
+            completeScenario('telegram-scam', choice);
+
+            // 2. Set Result Data
+            const data = {
+                scenarioType: 'Telegram Scam',
+                choice: choice,
+                scamType: 'Investment Fraud',
+                tactics: [
+                    'Unsolicited contact from stranger',
+                    'Promises of guaranteed high returns',
+                    'Creates artificial urgency ("limited time")',
+                    'Requests cryptocurrency payment'
+                ],
+                redFlags: [
+                    'Unrealistic returns (50% in 30 days)',
+                    'Contacted out of the blue',
+                    'No company details or registration',
+                    'Pressure to act immediately'
+                ],
+                protectionTips: [
+                    'Never invest based on unsolicited messages',
+                    'Be skeptical of guaranteed returns',
+                    'Block and report suspicious contacts',
+                    'If it sounds too good to be true, it probably is'
+                ]
+            };
+            sessionStorage.setItem('resultData', JSON.stringify(data));
+            window.location.href = 'result.html';
+        }
+    </script>
+</body>
+</html>

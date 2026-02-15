@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Scam - Scam Awareness Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page">
+        <div class="scenario-header">
+            <a href="scenario-selection.html" class="back-btn">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="19" y1="12" x2="5" y2="12"/>
+                    <polyline points="12 19 5 12 12 5"/>
+                </svg>
+                <span>Back</span>
+            </a>
+            <h1 class="text-center mb-2">Work From Home Job Scam</h1>
+            <p class="text-center text-gray text-sm">You received this job offer email</p>
+        </div>
+
+        <div class="container">
+            <div class="info-card">
+                <div class="mb-3">
+                    <p class="text-xs text-gray">From: hr@amazn-careers.com</p>
+                    <p class="text-xs text-gray">Subject: Congratulations! You've Been Selected</p>
+                </div>
+                
+                <p class="mb-3"><strong>Dear Applicant,</strong></p>
+                
+                <p class="mb-3">We are pleased to inform you that you have been selected for a Work From Home Data Entry position with Amazon. You will earn $3,500 per week working only 2-3 hours per day!</p>
+                
+                <p class="mb-3"><strong>Job Requirements:</strong><br>
+                • No experience necessary!<br>
+                • Flexible hours<br>
+                • Work from anywhere<br>
+                • Immediate start</p>
+                
+                <p class="mb-3"><strong>To secure your position, you need to:</strong><br>
+                1. Pay a one-time $299 equipment fee<br>
+                2. Purchase training materials for $150<br>
+                3. Send your banking details for direct deposit setup</p>
+                
+                <p class="mb-3">This is a limited opportunity and we need your response within 24 hours. Don't miss this chance!</p>
+                
+                <p><strong>Act now to claim your position!</strong></p>
+            </div>
+
+            <h3 class="mb-3">What do you do?</h3>
+
+            <div class="choice-buttons">
+                <button class="btn btn-secondary" onclick="handleChoice('agree')">
+                    Pay the fees - this sounds like a great job!
+                </button>
+                <button class="btn btn-primary" onclick="handleChoice('disagree')">
+                    Delete and report - this is a scam
+                </button>
+                <button class="btn btn-secondary" onclick="handleChoice('troll')">
+                    Ask for more "details" to waste their time
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Check Login
+        if (!getCurrentUser()) window.location.href = 'login.html';
+
+        async function handleChoice(choice) {
+            // 1. Save to Database
+            completeScenario('job-scam', choice);
+
+            // 2. Prepare Result Data
+            const resultData = {
+                scenarioType: 'Job Scam',
+                choice: choice,
+                scamType: 'Employment Fraud',
+                tactics: [
+                    'Impersonates legitimate company (Amazon)',
+                    'Unsolicited job offer without application',
+                    'Promises unrealistic earnings for minimal work',
+                    'Requests upfront payment for "equipment" or "training"',
+                    'Creates artificial urgency (24-hour deadline)',
+                    'Asks for sensitive banking information'
+                ],
+                redFlags: [
+                    'Misspelled email domain (amazn-careers.com)',
+                    'Job offer received without applying',
+                    'Extremely high pay for basic work ($3,500/week for data entry)',
+                    'Requests money upfront for job opportunity',
+                    'No interview or verification process',
+                    'Pressure to respond immediately'
+                ],
+                protectionTips: [
+                    'Legitimate employers never ask for money upfront',
+                    'Verify job offers through official company websites',
+                    'Research the company and check email domains carefully',
+                    'Be suspicious of unsolicited job offers',
+                    'Never share banking details before proper verification',
+                    'If it seems too good to be true, it probably is'
+                ]
+            };
+
+            sessionStorage.setItem('resultData', JSON.stringify(resultData));
+            window.location.href = 'result.html';
+        }
+    </script>
+</body>
+</html>
