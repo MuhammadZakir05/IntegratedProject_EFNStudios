@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app-frame">
+        <div id="app-content" style="display:flex; flex-direction:column; justify-content:center;">
+            
+            <div style="margin-bottom: 40px;">
+                <h1 style="margin-bottom:10px;">Welcome Back</h1>
+                <p style="color:#888;">Sign in to access simulations.</p>
+            </div>
+
+            <input type="text" id="user" placeholder="Username">
+            <input type="password" id="pass" placeholder="Password">
+
+            <button class="btn btn-primary" onclick="handleLogin()">Log In</button>
+            <a href="signup.html" class="btn btn-outline">Create Account</a>
+            
+            <a href="landing.html" style="text-align:center; color:#444; margin-top:30px; font-size:0.8rem; text-decoration:none;">Back to Website</a>
+        </div>
+    </div>
+
+    <script src="db.js"></script>
+    <script>
+        // Only redirect if we confirm user is logged in
+        if(localStorage.getItem('defn_uid')) window.location.href = 'home.html';
+
+        async function handleLogin() {
+            let u = document.getElementById('user').value;
+            let p = document.getElementById('pass').value;
+            let btn = document.querySelector('.btn-primary');
+            let originalText = btn.innerText;
+            btn.innerText = "Verifying...";
+            
+            if(!await DB.login(u, p)) {
+                alert("Invalid Credentials");
+                btn.innerText = originalText;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app-frame">
+        <div id="app-content">
+            <div class="header">
+                <a href="home.html"><i class="fas fa-arrow-left"></i></a>
+                <span>Settings</span>
+                <div></div>
+            </div>
+
+            <div class="card">
+                <div class="setting-row">
+                    <div style="display:flex; gap:15px; align-items:center;">
+                        <div style="width:40px; height:40px; background:#222; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#a855f7;">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight:bold;">Dark Mode</div>
+                            <div style="font-size:0.8rem; color:#888;">Enabled by default</div>
+                        </div>
+                    </div>
+                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="setting-row">
+                    <div style="display:flex; gap:15px; align-items:center;">
+                        <div style="width:40px; height:40px; background:#222; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#22c55e;">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight:bold;">Notifications</div>
+                            <div style="font-size:0.8rem; color:#888;">Get app updates</div>
+                        </div>
+                    </div>
+                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+            </div>
+
+            <div class="card" onclick="location.href='about.html'" style="cursor:pointer;">
+                <div class="setting-row">
+                    <div style="display:flex; gap:15px; align-items:center;">
+                        <div style="width:40px; height:40px; background:#222; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#3b82f6;">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight:bold;">About</div>
+                            <div style="font-size:0.8rem; color:#888;">Version 1.0.0</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right" style="color:#444;"></i>
+                </div>
+            </div>
+
+            <div style="height:30px;"></div>
+            
+            <div style="padding:0 10px;">
+                <h4 style="color:#ef4444; margin-bottom:10px;">Danger Zone</h4>
+                <button class="btn btn-danger" onclick="resetApp()">Reset All Progress</button>
+                <button class="btn btn-outline" onclick="DB.logout()">Log Out</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="db.js"></script>
+    <script>
+        async function resetApp() {
+            if(confirm("Are you sure? This will delete all your history and badges.")) {
+                let u = await DB.getUser();
+                if(u) {
+                    await fetch(`${CONFIG.DB_URL}/${u._id}`, {
+                        method: 'PATCH',
+                        headers: DB.headers,
+                        body: JSON.stringify({ balance: 5000, history: [], badges: [] })
+                    });
+                    alert("Account Reset.");
+                    window.location.href = 'home.html';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -9,26 +9,27 @@
 <body>
     <div id="app-frame">
         <div id="app-content" style="padding-top:40px;">
-            <h2 style="margin-bottom:30px;">Sign Up</h2>
+            <h2 style="margin-bottom:30px;">Create Account</h2>
             <input type="text" id="fname" placeholder="Full Name">
             <input type="email" id="email" placeholder="Email Address">
             <input type="text" id="user" placeholder="Username">
             <input type="password" id="pass" placeholder="Password">
-            <button class="btn btn-primary" onclick="signup()">Create Account</button>
+            
+            <button class="btn btn-primary" onclick="handleSignup()">Sign Up</button>
             <a href="index.html" class="btn btn-outline" style="border:none;">Back to Login</a>
         </div>
     </div>
     <script src="db.js"></script>
     <script>
-        async function signup() {
+        async function handleSignup() {
             let f = document.getElementById('fname').value;
             let e = document.getElementById('email').value;
             let u = document.getElementById('user').value;
             let p = document.getElementById('pass').value;
             let res = await DB.signup(f, e, u, p);
-            if(res === "success") { alert("Account Created!"); window.location.href = 'index.html'; }
-            else if(res === "exists") alert("Username Taken");
-            else alert("Error");
+            if(res === "success") { alert("Created!"); window.location.href = 'index.html'; }
+            else if(res === "exists") alert("Username taken.");
+            else alert("Error.");
         }
     </script>
 </body>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Simulation</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Embed styles to ensure it looks right even if style.css fails */
+        body { background: #000; color: white; display: flex; justify-content: center; height: 100vh; margin: 0; }
+        #app-frame { width: 100%; max-width: 400px; height: 100%; display: flex; flex-direction: column; background: #050505; position: relative; border: 8px solid #222; border-radius: 40px; }
+        @media (max-width: 500px) { #app-frame { border: none; border-radius: 0; } }
+
+        .hidden { display: none !important; }
+        
+        /* Briefing Styles */
+        .brief-card { background: #1a1a1a; padding: 20px; border-radius: 16px; margin-bottom: 15px; border: 1px solid #333; }
+        .tip-card { background: rgba(249, 115, 22, 0.1); border: 1px solid #f97316; padding: 20px; border-radius: 16px; }
+
+        /* Chat Styles */
+        .chat-container { flex: 1; padding: 20px; overflow-y: auto; background: #000; }
+        .chat-bubble { padding: 12px 16px; border-radius: 16px; max-width: 85%; font-size: 0.95rem; margin-bottom: 10px; line-height: 1.4; clear: both; }
+        .left { background: #222; color: #fff; float: left; border-bottom-left-radius: 4px; }
+        .right { background: #3b82f6; color: white; float: right; border-bottom-right-radius: 4px; }
+
+        /* Buttons */
+        .btn { padding: 16px; border-radius: 12px; border: none; font-weight: bold; font-size: 1rem; cursor: pointer; width: 100%; color: white; margin-top: 10px; }
+        .header { padding: 20px; text-align: center; border-bottom: 1px solid #222; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .header a { color: white; text-decoration: none; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+    <div id="app-frame">
+        
+        <div id="screen-briefing" style="padding:20px; flex:1; display:flex; flex-direction:column;">
+            <div class="header" style="border:none; padding:0 0 20px 0;">
+                <a href="simulation.html">✕</a>
+                <span>Briefing</span>
+                <div style="width:20px;"></div>
+            </div>
+
+            <div class="brief-card">
+                <div style="color:#888; font-size:0.8rem; margin-bottom:5px; text-transform:uppercase;">Situation</div>
+                <div id="br-situation" style="font-size:1.1rem; line-height:1.5;">Loading Data...</div>
+            </div>
+
+            <div class="tip-card">
+                <div style="color:#f97316; font-size:0.8rem; font-weight:bold; margin-bottom:5px;">💡 INTELLIGENCE</div>
+                <div id="br-tip" style="font-size:0.9rem; color:#ddd;">...</div>
+            </div>
+
+            <div style="margin-top:auto;">
+                <button class="btn" style="background:#3b82f6;" onclick="startGame()">Start Simulation</button>
+            </div>
+        </div>
+
+        <div id="screen-game" class="hidden" style="flex:1; display:flex; flex-direction:column;">
+            <div class="header">
+                <span>Incoming Message</span>
+            </div>
+            
+            <div id="game-body" class="chat-container">
+                </div>
+
+            <div id="game-opts" style="padding:20px; background:#111;">
+                </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1. GAME DATA (Hardcoded so it CANNOT be undefined) ---
+        const scenarios = [
+            {
+                id: "telegram_scam",
+                type: "chat",
+                briefing: { 
+                    situation: "A contact using your friend's name messages you urgently asking for help.", 
+                    tip: "Scammers often hijack accounts. Always call your friend to verify." 
+                },
+                content: { 
+                    body: `
+                        <div class="chat-bubble left">Hey! Long time no see.</div>
+                        <div class="chat-bubble left">I'm in a bind. Can you transfer $300? I'll pay you back tmrw! 🙏</div>
+                    `, 
+                    cost: 300 
+                },
+                options: [ 
+                    {text:"Sure, sending $300", type:"wrong"}, 
+                    {text:"Call me first", type:"correct"},
+                    {text:"New phone who dis?", type:"troll"}
+                ]
+            },
+            {
+                id: "job_scam",
+                type: "email",
+                briefing: { 
+                    situation: "You received a high-paying job offer requiring an upfront fee.", 
+                    tip: "Legitimate employers NEVER ask you to pay for equipment." 
+                },
+                content: { 
+                    body: `
+                        <div style="background:white; color:black; padding:20px; border-radius:10px;">
+                            <div style="border-bottom:1px solid #eee; padding-bottom:10px; margin-bottom:10px;">
+                                <b>From:</b> TechCorp HR<br>
+                                <b>Subject:</b> Job Offer: Remote Admin
+                            </div>
+                            <p>We are pleased to offer you the role.</p>
+                            <p>To start, please transfer <b style="color:red">$100</b> for your laptop setup fee.</p>
+                        </div>
+                    `, 
+                    cost: 100 
+                },
+                options: [ 
+                    {text:"Pay $100 Fee", type:"wrong"}, 
+                    {text:"Report Scam", type:"correct"} 
+                ]
+            },
+            {
+                id: "phishing_scam",
+                type: "web",
+                briefing: { 
+                    situation: "You got an SMS saying your bank account is locked.", 
+                    tip: "Banks never send login links via SMS." 
+                },
+                content: { 
+                    body: `
+                        <div style="text-align:center; padding:20px; border:2px solid #ef4444; border-radius:10px; background:#1a0505;">
+                            <h2 style="color:#ef4444; margin:0;">⚠️ URGENT</h2>
+                            <p>Account Suspended.</p>
+                            <button style="background:#ef4444; color:white; border:none; padding:10px 20px; border-radius:5px;">VERIFY IDENTITY</button>
+                        </div>
+                    `, 
+                    cost: 1200 
+                },
+                options: [ 
+                    {text:"Click Link", type:"wrong"}, 
+                    {text:"Delete Message", type:"correct"} 
+                ]
+            }
+        ];
+
+        // --- 2. LOGIC ---
+        // Get the ID the user clicked
+        let sid = localStorage.getItem('current_scenario');
+        // Find the matching data
+        let s = scenarios.find(x => x.id === sid);
+
+        // Safety Check
+        if (!s) {
+            document.getElementById('br-situation').innerText = "Error: No scenario selected.";
+            document.getElementById('br-tip').innerText = "Please go back to the menu.";
+        } else {
+            // Fill the text
+            document.getElementById('br-situation').innerHTML = s.briefing.situation;
+            document.getElementById('br-tip').innerText = s.briefing.tip;
+        }
+
+        function startGame() {
+            document.getElementById('screen-briefing').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('hidden');
+            
+            // Fill Game Content
+            document.getElementById('game-body').innerHTML = s.content.body;
+            
+            // Create Buttons
+            let opts = document.getElementById('game-opts');
+            s.options.forEach(o => {
+                let btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.innerText = o.text;
+                
+                // Button Colors
+                if(o.type === 'correct') btn.style.background = '#22c55e'; // Green
+                else if(o.type === 'wrong') btn.style.background = '#ef4444'; // Red
+                else btn.style.background = '#f59e0b'; // Orange
+
+                btn.onclick = () => finish(o);
+                opts.appendChild(btn);
+            });
+        }
+
+        async function finish(choice) {
+            let passed = choice.type !== 'wrong';
+            let cost = passed ? 0 : s.content.cost;
+            let status = passed ? 'passed' : 'failed';
+            
+            // OPTIONAL: Save to DB (If db.js is present)
+            if(typeof DB !== 'undefined') {
+                try {
+                    await DB.saveProgress(cost, s.id, status);
+                } catch(e) { console.log("Offline save failed"); }
+            }
+            
+            alert(passed ? "✅ Safe! Good job." : `❌ Scammed! You lost $${cost}.`);
+            window.location.href = 'home.html';
+        }
+    </script>
+</body>
+</html>

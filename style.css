@@ -1,18 +1,12 @@
 :root {
-    --bg-app: #050505; 
-    --surface: #121212; 
-    --primary: #3b82f6; 
-    --text: #ffffff; 
-    --text-muted: #9ca3af;
-    --grad-blue: linear-gradient(135deg, #3b82f6, #06b6d4);
-    --grad-pink: linear-gradient(135deg, #d946ef, #f43f5e);
-    --grad-orange: linear-gradient(135deg, #f97316, #ef4444);
+    --bg-app: #050505; --surface: #121212; 
+    --primary: #3b82f6; --text: #ffffff; 
 }
 
 * { box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
 
 body { 
-    background: #000; color: var(--text); margin: 0; 
+    background: #000; color: white; margin: 0; 
     display: flex; justify-content: center; align-items: center; 
     height: 100vh; overflow: hidden; 
 }
@@ -20,54 +14,70 @@ body {
 /* PHONE FRAME */
 #app-frame {
     position: relative; background: var(--bg-app); overflow: hidden;
-    display: flex; flex-direction: column; width: 100%; height: 100%;
+    display: flex; flex-direction: column; /* This fixes the layout */
+    width: 100%; height: 100%;
 }
 @media (min-width: 500px) {
     #app-frame {
         width: 375px; height: 812px; border-radius: 40px; border: 8px solid #222;
-        box-shadow: 0 0 50px rgba(59,130,246,0.2);
     }
 }
 
-/* CONTENT AREA */
-#app-content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 90px; }
+/* CONTENT AREA (Scrolls) */
+#app-content { 
+    flex: 1; /* Takes all available space */
+    overflow-y: auto; 
+    padding: 20px; 
+    display: flex; flex-direction: column;
+}
 .hidden { display: none !important; }
 
-/* COMPONENTS */
-.header { font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
-.card { background: var(--surface); border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 1px solid #222; }
-
-/* INPUTS & BUTTONS */
-input, textarea { width: 100%; padding: 16px; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; color: white; margin-bottom: 15px; outline: none; }
-.btn { width: 100%; padding: 16px; border-radius: 14px; border: none; font-weight: 600; font-size: 1rem; cursor: pointer; color: white; text-align: center; display: block; text-decoration: none; margin-top: 10px; }
-.btn-primary { background: linear-gradient(90deg, #6366f1, #8b5cf6); box-shadow: 0 4px 15px rgba(99,102,241,0.4); }
-.btn-outline { background: transparent; border: 1px solid #444; color: #aaa; }
-
-/* BOTTOM NAV */
+/* HOTBAR (Fixed at Bottom) */
 .nav-bar { 
-    height: 80px; background: #0a0a0a; border-top: 1px solid #222;
+    height: 80px; 
+    background: #0a0a0a; 
+    border-top: 1px solid #222;
     display: flex; justify-content: space-around; align-items: center; 
-    position: absolute; bottom: 0; width: 100%; z-index: 50;
+    flex-shrink: 0; /* Prevents it from shrinking */
+    z-index: 100;
 }
-.nav-item { color: #555; text-align: center; font-size: 1.4rem; cursor: pointer; }
+.nav-item { color: #555; text-align: center; font-size: 1.5rem; cursor: pointer; text-decoration: none; }
 .nav-item.active { color: #3b82f6; }
 .nav-item span { display: block; font-size: 0.6rem; margin-top: 4px; font-weight: 600; }
 
-/* SCENARIO CARDS */
-.scenario-card { height: 160px; border-radius: 24px; position: relative; padding: 20px; color: white; overflow: hidden; margin-bottom: 15px; cursor: pointer; }
-.sc-blue { background: var(--grad-blue); }
-.sc-pink { background: var(--grad-pink); }
-.sc-orange { background: var(--grad-orange); }
-.sc-badge { background: rgba(0,0,0,0.3); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; position: absolute; top: 20px; right: 20px; }
+/* COMPONENTS */
+.header { font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+.header a { color: white; }
 
-/* LOADING OVERLAY */
-.loader-overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9); z-index: 9999;
-    display: flex; justify-content: center; align-items: center;
+.card { 
+    background: var(--surface); border-radius: 20px; padding: 20px; 
+    margin-bottom: 15px; border: 1px solid #222; 
 }
-.spinner {
-    width: 40px; height: 40px; border: 4px solid #333; border-top: 4px solid #3b82f6;
-    border-radius: 50%; animation: spin 1s linear infinite;
+
+/* SCENARIO CARDS */
+.scenario-card { 
+    border-radius: 24px; padding: 25px; margin-bottom: 15px; 
+    color: white; position: relative; cursor: pointer; overflow: hidden;
+    transition: transform 0.2s;
 }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.scenario-card:active { transform: scale(0.98); }
+.sc-blue { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+.sc-pink { background: linear-gradient(135deg, #d946ef, #f43f5e); }
+.sc-orange { background: linear-gradient(135deg, #f97316, #ef4444); }
+
+.sc-badge { 
+    position: absolute; top: 20px; right: 20px; 
+    background: rgba(0,0,0,0.3); padding: 5px 12px; 
+    border-radius: 20px; font-size: 0.8rem; font-weight: bold;
+}
+
+/* GAME CHAT */
+.chat-container { flex: 1; overflow-y: auto; padding: 10px; margin-bottom: 10px; }
+.chat-bubble { padding: 12px 16px; border-radius: 16px; max-width: 85%; font-size: 0.95rem; margin-bottom: 10px; clear: both; }
+.left { background: #222; float: left; border-bottom-left-radius: 4px; }
+.right { background: var(--primary); float: right; border-bottom-right-radius: 4px; }
+
+/* BUTTONS */
+.btn { width: 100%; padding: 16px; border-radius: 14px; border: none; font-weight: 600; cursor: pointer; color: white; margin-top: 10px; }
+.btn-primary { background: var(--primary); }
+.btn-outline { background: transparent; border: 1px solid #444; color: #aaa; }

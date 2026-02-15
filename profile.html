@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* BADGE SLOT STYLES */
+        .badge-slot {
+            height: 140px;
+            background: #111; border: 1px dashed #333;
+            border-radius: 20px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            color: #444; margin-top: 20px;
+            transition: 0.3s;
+        }
+        
+        /* UNLOCKED STYLE (Glowing Gold for Medal) */
+        .badge-slot.unlocked {
+            background: linear-gradient(135deg, #2a1a00, #000);
+            border: 1px solid #fbbf24; /* Gold Border */
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.2); /* Gold Glow */
+            color: #fbbf24; cursor: pointer;
+        }
+
+        /* 3D VIEWER OVERLAY */
+        #model-viewer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: black; z-index: 9999;
+            display: flex; flex-direction: column;
+        }
+        
+        iframe { border: none; width: 100%; height: 100%; }
+        
+        .close-btn {
+            position: absolute; top: 30px; right: 30px;
+            background: rgba(0,0,0,0.8); color: white;
+            border: 1px solid #333; padding: 12px 25px;
+            border-radius: 30px; font-weight: bold; cursor: pointer;
+            z-index: 10000;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-frame">
+        <div id="app-content">
+            
+            <div class="card" style="text-align:center; padding:30px;">
+                <i class="fas fa-user-circle" style="font-size:4rem; margin-bottom:15px; color:#3b82f6;"></i>
+                <h2 id="p-name" style="margin:0;">User</h2>
+                <p id="p-email" style="color:#888;">loading...</p>
+                <div style="font-size:0.8rem; color:#22c55e; margin-top:5px;">● Active Agent</div>
+            </div>
+
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <span style="color:#888;">Safety Score</span>
+                    <span id="p-score" style="color:white; font-weight:bold;">0 XP</span>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <div style="flex:1; background:#1a0505; border:1px solid #ef4444; border-radius:12px; padding:15px; text-align:center;">
+                        <div style="color:#ef4444; font-size:0.8rem;">LOST</div>
+                        <div id="p-lost" style="color:white; font-weight:bold; font-size:1.2rem;">$0</div>
+                    </div>
+                    <div style="flex:1; background:#051a05; border:1px solid #22c55e; border-radius:12px; padding:15px; text-align:center;">
+                        <div style="color:#22c55e; font-size:0.8rem;">WINS</div>
+                        <div id="p-wins" style="color:white; font-weight:bold; font-size:1.2rem;">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top:30px;">Achievements</h3>
+            
+            <div id="badge-area" class="badge-slot">
+                <i class="fas fa-lock" style="font-size:1.5rem; margin-bottom:5px;"></i>
+                <div style="font-size:0.9rem;">Complete 3 Scenarios</div>
+            </div>
+
+            <button class="btn btn-outline" style="margin-top:40px;" onclick="DB.logout()">Log Out</button>
+        </div>
+
+        <div class="nav-bar">
+            <a href="home.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+            <a href="simulation.html" class="nav-item"><i class="fas fa-gamepad"></i><span>Sim</span></a>
+            <a href="scampedia.html" class="nav-item"><i class="fas fa-book"></i><span>Learn</span></a>
+            <a href="profile.html" class="nav-item active"><i class="fas fa-user"></i><span>Profile</span></a>
+        </div>
+    </div>
+
+    <div id="model-viewer" class="hidden">
+        <button class="close-btn" onclick="close3D()">CLOSE ✕</button>
+        
+        <iframe 
+            title="My Medal" 
+            allow="autoplay; fullscreen; xr-spatial-tracking" 
+            src="https://sketchfab.com/models/d07b43d11c574df698c50598dfb97544/embed">
+        </iframe>
+
+    </div>
+
+    <script src="db.js"></script>
+    <script>
+        async function load() {
+            let u = await DB.getUser();
+            if(!u) return window.location.href = 'index.html';
+
+            document.getElementById('p-name').innerText = u.fullname || u.username;
+            document.getElementById('p-email').innerText = u.email || "No Email";
+            
+            let start = u.startBalance || 5000;
+            document.getElementById('p-lost').innerText = `$${start - u.balance}`;
+            let wins = u.history ? u.history.filter(h=>h.status==='passed').length : 0;
+            document.getElementById('p-wins').innerText = wins;
+            document.getElementById('p-score').innerText = (wins * 100) + " XP";
+
+            // CHECK IF UNLOCKED
+            if (u.badges && u.badges.includes('badge_3d_shield')) {
+                let badge = document.getElementById('badge-area');
+                badge.className = "badge-slot unlocked";
+                badge.innerHTML = `
+                    <i class="fas fa-medal" style="font-size:2.5rem; margin-bottom:10px;"></i>
+                    <div style="font-weight:bold; font-size:1.1rem;">Honor Medal</div>
+                    <div style="font-size:0.75rem; opacity:0.8;">Tap to Inspect 3D Model</div>
+                `;
+                badge.onclick = open3D;
+            }
+        }
+
+        function open3D() { document.getElementById('model-viewer').classList.remove('hidden'); }
+        function close3D() { document.getElementById('model-viewer').classList.add('hidden'); }
+
+        load();
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Connection Doctor</title>
+    <style>body{background:#111;color:#0f0;font-family:monospace;padding:20px;}</style>
+</head>
+<body>
+    <h2>System Status</h2>
+    <div id="log">Initializing...</div>
+    <script src="db.js"></script>
+    <script>
+        const log = document.getElementById('log');
+        function print(msg) { log.innerHTML += "<br>> " + msg; }
+
+        async function check() {
+            print("Checking Internet...");
+            if(!navigator.onLine) print("ERROR: You are offline.");
+            else print("Online: OK");
+
+            print("Checking RestDB Config...");
+            print("URL: " + CONFIG.DB_URL);
+            
+            print("Attempting Fetch...");
+            try {
+                let start = Date.now();
+                let res = await fetch(CONFIG.DB_URL + "?max=1", { headers: DB.headers });
+                let time = Date.now() - start;
+                print("Response Time: " + time + "ms");
+                
+                if(res.status === 200) print("SUCCESS! Database Connected.");
+                else if(res.status === 401) print("ERROR: API Key Rejected (401).");
+                else if(res.status === 404) print("ERROR: Collection URL Wrong (404).");
+                else print("ERROR: Status " + res.status);
+            } catch(e) {
+                print("CRITICAL ERROR: " + e.message);
+                print("NOTE: If this says 'Failed to fetch', it is a CORS/Network block.");
+                print("FIX: The new db.js I gave you will bypass this using Offline Mode.");
+            }
+        }
+        check();
+    </script>
+</body>
+</html>
